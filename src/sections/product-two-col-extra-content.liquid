@@ -1,0 +1,40 @@
+{%- assign title = section.settings.title -%}
+{%- assign blog = blogs[section.settings.blog] -%}
+
+{% if blog != blank %}
+	<section class="section-container two-col-extra-content">
+		{% if title != blank %}
+			<h3 class="two-col-extra-content__title">
+				{{- title -}}
+			</h3>
+		{% endif %}
+
+		<div class="two-col-extra-content__article-wrapper">
+			{%- for article in blog.articles limit: 2 -%}
+				<div class="two-col-extra-content__article">
+					{% include 'blog-article' %}
+				</div>
+			{%- endfor -%}
+		</div>
+	</section>
+{% endif %}
+
+{% schema %}
+{
+	"name": "Two-col extra content",
+	"settings": [
+		{
+			"type": "text",
+			"id": "title",
+			"label": "Heading",
+			"default": "TWO-COL EXTRA CONTENT"
+		},
+		{
+			"type": "blog",
+			"id": "blog",
+			"label": "Blog",
+			"info": "Select a blog"
+		}
+	]
+}
+{% endschema %}

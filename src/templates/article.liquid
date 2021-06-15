@@ -1,0 +1,98 @@
+{% assign previous_article 	= blog.next_article %}
+{% assign next_article 		= blog.previous_article %}
+
+{% unless previous_article %}
+	{% assign last_index = blog.articles_count | minus: 1 %}
+	{% assign previous_article = blog.articles[last_index] %}
+{% endunless %}
+
+{% unless next_article %}
+	{% assign next_article = blog.articles[0] %}
+{% endunless %}
+
+{% if previous_article.handle == article.handle %}
+	{% assign previous_article = nil %}
+{% endif %}
+
+{% if next_article.handle == article.handle %}
+	{% assign next_article = nil %}
+{% endif %}
+
+<div class="section-container">
+	<article class="article" role="article" itemscope itemtype="http://schema.org/Article">
+		<header class="article__header">
+			<h1 class="h2 article__title">{{ article.title | upcase }}</h1>
+			<p class="article__author">{{ article.author | upcase }}</p>
+
+			{% if settings.social_sharing_blog %}
+				<div class="article__social-sharing article__social-sharing--horizontal article__social-sharing--hide">
+					{% include 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image %}
+				</div>
+			{% endif %}
+		</header>
+
+		{% if article.image %}
+			<div class="article__image-aspect-ratio">
+				<picture>
+					<source srcset="{{ article | img_url: '400x' }} 1x, {{ article | img_url: '800x' }} 2x" media="(max-width: 400px)">
+					<source srcset="{{ article | img_url: '767x' }} 1x, {{ article | img_url: '1534x' }} 2x" media="(max-width: 767px)">
+					<source srcset="{{ article | img_url: '991x' }} 1x, {{ article | img_url: '1982x' }} 2x" media="(max-width: 991px)">
+					<source srcset="{{ article | img_url: '1420x' }} 1x, {{ article | img_url: '2840x' }} 2x" media="(min-width: 992px)">
+					<img class="article__image" src="{{ article | img_url: '1420x' }}" alt="{{ article.title }}">
+				</picture>
+			</div>
+		{% endif %}
+
+		<div class="article__content">
+			{% if article.content.size > 2000 %}
+				<div class="article__social-sharing article__social-sharing--vertical">
+					{% if settings.social_sharing_blog %}
+						{% include 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image %}
+					{% endif %}
+				</div>
+			{% endif %}
+
+			<div class="article__text">
+				<div class="rte" itemprop="articleBody">
+					{{ article.content }}
+				</div>
+
+				{% if article.tags.size > 0 %}
+					<div class="article__tag-row">
+						{% for tag in article.tags %}
+							<a class="article__tag" href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a>
+						{% endfor %}
+					</div>
+				{% endif %}
+
+				{% if settings.social_sharing_blog %}
+					<div class="article__social-sharing article__social-sharing--horizontal">
+						{% include 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image %}
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</article>
+
+	{% if previous_article or next_article %}
+		<div class="more-articles">
+			<h3 class="more-articles__title">{{- 'blogs.more_articles.title' | t -}}</h3>
+
+			<div class="more-articles__articles">
+				{% if previous_article %}
+					<div class="more-articles__article">
+						{% include 'blog-article' | article: previous_article %}
+					</div>
+				{% endif %}
+
+				{% if next_article %}
+					<div class="more-articles__article">
+						{% include 'blog-article' | article: next_article %}
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	{% endif %}
+</div>
+
+{% section 'dynamic-newsletter' %}

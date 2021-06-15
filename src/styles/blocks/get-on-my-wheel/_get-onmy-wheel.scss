@@ -1,0 +1,152 @@
+.get-on-my-wheel {
+	position: relative;
+	display: flex;
+	justify-content: flex-end;
+	margin: 20px auto;
+
+	.get-on-my-wheel__background-image {
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 1;
+		width: 65%;
+		height: 100%;
+	}
+
+	.get-on-my-wheel__gradient {
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: 35%;
+		height: 100%;
+	}
+
+	.get-on-my-wheel__text {
+		z-index: 2;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-start;
+		align-items: center;
+		max-width: 540px;
+		width: 100%;
+		margin-top: 49px;
+		margin-bottom: 54px;
+		padding-right: 10px;
+		padding-left: 50px;
+	}
+
+	.get-on-my-wheel__text-title {
+		z-index: 2;
+		width: 100%;
+		font-size: 32px;
+		line-height: 1.1;
+		color: $white;
+	}
+
+	.get-on-my-wheel__text-description {
+		z-index: 2;
+		width: 100%;
+		margin: 1px 0;
+		font-size: 18px;
+		color: $white;
+	}
+
+	.get-on-my-wheel__button {
+		z-index: 2;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 50px 10px;
+		max-width: 440px;
+		width: 100%;
+	}
+
+	@include breakpoint(medium) {
+		.get-on-my-wheel__text {
+			max-width: 500px;
+		}
+
+		.get-on-my-wheel__button {
+			max-width: 320px;
+		}
+	}
+
+	@include breakpoint(small) {
+		.get-on-my-wheel__background-image {
+			left: -73px;
+		}
+
+		.get-on-my-wheel__gradient {
+			width: 45%;
+		}
+
+		.get-on-my-wheel__text {
+			max-width: 380px;
+			margin-top: 35px;
+			margin-bottom: 37px;
+			padding-left: 51px;
+			padding-right: 9px;
+		}
+
+		.get-on-my-wheel__text-title {
+			margin-bottom: 9px;
+			font-size: 30px;
+			word-spacing: -2px;
+			letter-spacing: 1.5px;
+		}
+
+		.get-on-my-wheel__text-description {
+			margin: 0;
+			padding-right: 39px;
+			line-height: 28px;
+		}
+
+		.get-on-my-wheel__button {
+			max-width: 220px;
+			padding-bottom: 50px;
+		}
+	}
+
+	@include breakpoint(extra-small) {
+		justify-content: center;
+		flex-wrap: wrap;
+
+		.get-on-my-wheel__background-image {
+			left: -97px;
+			width: 100%;
+			background-position: top left !important;
+		}
+
+		.get-on-my-wheel__gradient {
+			display: none;
+		}
+
+		.get-on-my-wheel__text {
+			max-width: 463px;
+			margin-top: 49px;
+			margin-bottom: 10px;
+			padding: 0 30px;
+		}
+
+		.get-on-my-wheel__text-title {
+			margin-bottom: 12px;
+			font-size: 24px;
+			text-align: center;
+			word-spacing: 0.2px;
+			letter-spacing: 1px;
+		}
+
+		.get-on-my-wheel__text-description {
+			margin: 0;
+			padding: 0 1px;
+			line-height: 28px;
+			text-align: center;
+		}
+
+		.get-on-my-wheel__button {
+			max-width: 305px;
+			margin-bottom: 45px;
+			padding: 11px;
+		}
+	}
+}

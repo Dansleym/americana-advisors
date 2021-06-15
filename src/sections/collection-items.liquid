@@ -1,0 +1,136 @@
+{%- assign theme_light = 'light' -%}
+{%- assign theme_dark = 'dark' -%}
+
+{%- if section.settings.button_text != blank -%}
+	{%- assign button_text = section.settings.button_text -%}
+{%- else -%}
+	{%- assign button_text = 'VIEW PRODUCT' -%}
+{%- endif -%}
+
+<section class="collection-items">
+	<div class="collection-items__wrapper">
+		{%- for product in collection.products -%}
+			{%- assign image = product.metafields.media.preview_banner | first -%}
+
+			{%- assign iteration = forloop.index | modulo: 2 -%}
+
+			{%- assign recommendation_title = product.metafields.addition.title -%}
+			{%- assign recommendation_description = product.metafields.addition.description -%}
+
+			{%- assign clients_title = product.metafields.clients.title -%}
+			{%- assign clients_list = product.metafields.clients.customers -%}
+
+			{%- if iteration == 0 -%}
+				{%- assign theme = theme_light -%}
+			{%- else -%}
+				{%- assign theme = theme_dark -%}
+			{%- endif -%}
+
+			<div class="collection-items__product-card collection-items__product-card--{{- theme -}}">
+				<div class="collection-items__product-main-information">
+					{%- if product.title != blank -%}
+						<div class="collection-items__product-title collection-items__product-title--{{- theme -}}">
+							{{- product.title -}}
+						</div>
+					{%- endif -%}
+
+					{%- if product.description != blank -%}
+						<div class="collection-items__product-description collection-items__product-description--{{- theme -}}">
+							{{- product.description | truncatewords: section.settings.truncatewords -}}
+						</div>
+					{%- endif -%}
+
+					<a href="{{- product.url | within: collection -}}"
+					   class="button button-cta collection-items__product-link"
+					>
+						{{- button_text -}}
+
+						<div class="icon-container--arrow">
+							{% include 'icon-white-arrow' %}
+						</div>
+					</a>
+
+					<div class="collection-items__chart collection-items__chart--mobile">
+						{% include 'product-specifications-chart' %}
+					</div>
+				</div>
+
+				<div class="collection-items__preview">
+					{%- if image != blank -%}
+						<img class="collection-items__preview-image"
+							 src="{{ image.src }}"
+							 alt="{{ image.alt }}"
+						/>
+					{%- else -%}
+						{%- case theme -%}
+							{%- when 'dark' -%}
+								{%- assign alternative = 'logo-dark.png' -%}
+							{%- else %}
+								{%- assign alternative = 'logo.png' -%}
+						{%- endcase -%}
+
+						<img class="collection-items__alternative-image"
+							 src="{{ alternative | asset_url }}"
+							 alt="logo"
+						/>
+					{%- endif -%}
+				</div>
+
+				<div class="collection-items__chart">
+					{% include 'product-specifications-chart' %}
+				</div>
+
+				{%- if recommendation_title != blank and recommendation_description != blank -%}
+					<div class="collection-items__recommendation">
+						<div class="collection-items__subtitle collection-items__subtitle--{{- theme -}}">
+							{{- recommendation_title -}}
+						</div>
+
+						<div class="collection-items__recommendation-description">
+							{{- recommendation_description -}}
+						</div>
+					</div>
+				{%- endif -%}
+
+				{%- if clients_title != blank and clients_list != blank -%}
+					<div class="collection-items__clients">
+						<div class="collection-items__subtitle collection-items__subtitle--{{- theme -}}">
+							{{- clients_title -}}
+						</div>
+
+						<ul class="collection-items__clients-list">
+							{%- for client in clients_list -%}
+								<li class="collection-items__client-name">
+									{{- client -}}
+								</li>
+							{%- endfor -%}
+						</ul>
+					</div>
+				{%- endif -%}
+			</div>
+		{%- endfor -%}
+	</div>
+</section>
+
+{% schema %}
+{
+	"name": "Collection Items",
+	"settings": [
+		{
+			"type": "text",
+			"id": "button_text",
+			"label": "Text on product navigation buttons",
+			"default": "VIEW WHEELSET"
+		},
+		{
+			"type": "range",
+			"id": "truncatewords",
+			"min": 1,
+			"max": 100,
+			"step": 1,
+			"default": 10,
+			"label": "Maximum number of output words for product description"
+		}
+	]
+}
+{% endschema %}

@@ -1,0 +1,90 @@
+{%- assign title = section.settings.title -%}
+{%- assign description = section.settings.description -%}
+{%- assign anchor_link = section.settings.anchor_link -%}
+{%- assign anchor_text = section.settings.anchor_text -%}
+
+{%- if title != blank and description != blank -%}
+	<section class="section-container product-benefits">
+		<div class="product-benefits__text">
+			{%- if title != blank -%}
+				<h3 class="title product-benefits__text-title">
+					{{- title -}}
+				</h3>
+			{%- endif -%}
+
+			{%- if description != blank -%}
+				<p class="small-p product-benefits__text-description">
+					{{- description -}}
+
+					{%- if anchor_link != blank and anchor_text != blank -%}
+						<a href="#{{- anchor_link -}}" class="js-anchor-link anchor-link"> {{- anchor_text -}}</a>
+					{%- endif -%}
+				</p>
+			{%- endif -%}
+		</div>
+
+		<ul class="product-benefits__benefits">
+			{%- for block in section.blocks -%}
+				{%- if block.settings.benefits_text != blank -%}
+					<li class="product-benefits__benefits-container">
+						<div class="icon-container icon-container--accept">
+							{%- include 'icon-accept' -%}
+						</div>
+
+						<div class="product-benefits__benefits-text">
+							{{- block.settings.benefits_text -}}
+						</div>
+					</li>
+				{%- endif -%}
+			{%- endfor -%}
+		</ul>
+	</section>
+{%- endif -%}
+
+{% schema %}
+{
+	"name": "Benefits",
+	"max_blocks": 6,
+	"settings": [
+		{
+			"type": "text",
+			"id": "title",
+			"label": "Title",
+			"default": "WHAT IT'S FOR, WHY IT'S GREAT"
+		},
+		{
+			"type": "textarea",
+			"id": "description",
+			"label": "Description",
+			"default": "Description"
+		},
+		{
+			"type": "text",
+			"id": "anchor_text",
+			"label": "Anchor text",
+			"default": "View Full Specs"
+		},
+		{
+			"type": "text",
+			"id": "anchor_link",
+			"label": "Anchor link",
+			"default": "#shopify-section-footer",
+			"info": "Insert the ID of the block you want to go to."
+		}
+	],
+	"blocks": [
+		{
+			"type": "benefit",
+			"name": "Benefits",
+			"settings": [
+				{
+					"type": "textarea",
+					"id": "benefits_text",
+					"label": "Benefits text",
+					"default": "Free no fault crash replacement and lifetime warranty"
+				}
+			]
+		}
+	]
+}
+{% endschema %}

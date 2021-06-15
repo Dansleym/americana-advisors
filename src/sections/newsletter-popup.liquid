@@ -1,0 +1,95 @@
+{% assign title = section.settings.title %}
+{% assign description = section.settings.description %}
+{% assign mailchimp_url = section.settings.mailchimp_subscribe_url %}
+{% assign placeholder = section.settings.placeholder %}
+{% assign button_text = section.settings.button_text %}
+
+{% if mailchimp_url != blank and button_text != blank and title != blank or description != blank %}
+<section class="newsletter-popup">
+	<div id="popup-01" class="popup js-popup">
+		<div id="popup-overlay" class="js-popup-close popup-overlay">
+		</div>
+
+		<div class="popup__container">
+			<div class="popup__content">
+				<a id="setCookie" class="js-popup-close popup__close-button">
+					<div class="icon-container">
+						{% include 'icon-close' %}
+					</div>
+				</a>
+
+				<div class="newsletter__container">
+					<div class="newsletter__wrapper">
+						<div class="newsletter__text">
+							{% if title != blank %}
+								<h4 class="newsletter__title">{{ title }}</h4>
+							{% endif %}
+
+							{% if description != blank %}
+								<p class="newsletter__description">{{ description }}</p>
+							{% endif %}
+						</div>
+
+						<div class="newsletter__form-wrapper">
+							<form id="newsletter-form" class="newsletter__form js-newsletter-popup-form" action="{{ mailchimp_url }}" method="post" target="_blank" novalidate>
+								<input type="email" name="EMAIL" class="input newsletter__input js-newsletter-popup-input" placeholder="{{ placeholder }}" aria-label="email">
+
+								<div class="newsletter__error-text js-newsletter-popup-error-text">Invalid email</div>
+
+								{% if button_text != blank %}
+									<button type="submit" name="subscribe" class="button button-cta newsletter__button js-newsletter-popup-button">
+										{{ button_text }}
+
+										<div class="icon-container icon-container--arrow">
+											{% include 'icon-white-arrow' %}
+										</div>
+									</button>
+								{% endif %}
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+	"name": "Newsletter popup",
+	"settings": [
+		{
+			"type": "text",
+			"id": "mailchimp_subscribe_url",
+			"label": "Mailchimp signup form URL",
+			"info": "*Enter your [form URL](https://us17.admin.mailchimp.com/lists/designer/?id=216846) link"
+		},
+		{
+			"type": "text",
+			"id": "title",
+			"label": "Title",
+			"default": "JOIN OUR NEWSLETTER"
+		},
+		{
+			"type": "text",
+			"id": "description",
+			"label": "Description",
+			"default": "Follow us to stay up to date and see unique content."
+		},
+		{
+			"type": "text",
+			"id": "placeholder",
+			"label": "Input placeholder",
+			"default": "Email Address"
+		},
+		{
+			"type": "text",
+			"id": "button_text",
+			"label": "*Button text",
+			"default": "JOIN NOW"
+		}
+	]
+}
+{% endschema %}
+

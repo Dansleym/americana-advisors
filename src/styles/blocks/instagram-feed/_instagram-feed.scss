@@ -1,0 +1,128 @@
+.instagram-feed {
+	position: relative;
+	padding-top: 34px;
+	padding-bottom: 46px;
+	padding-right: 20px;
+	padding-left: 20px;
+	text-align: center;
+	color: $nero;
+
+	.instagram-feed__title {
+		margin-top: 13px;
+		margin-bottom: 6px;
+		line-height: 0.875;
+		text-align: center;
+		color: inherit;
+	}
+
+	.instagram-feed__source-link {
+		font-weight: 600;
+		font-style: italic;
+		color: inherit;
+	}
+
+	.instagram-feed__description {
+		margin-top: 0;
+		padding-right: 9px;
+		font-size: 18px;
+		line-height: 1.55;
+	}
+
+	.instagram-feed__swiper-container {
+		padding-top: 16px;
+		padding-bottom: 8px;
+	}
+
+	.instagram-feed__slide {
+		height: auto;
+	}
+
+	.instagram-feed__image-wrapper {
+		max-width: 226px;
+		width: 100%;
+		height: auto;
+		margin: 0;
+	}
+
+	.instagram-feed__image-aspect-ratio {
+		position: relative;
+		overflow: hidden;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+
+		&:focus {
+			opacity: 1;
+		}
+
+		@include hovers() {
+			opacity: 1;
+		}
+	}
+
+	.instagram-feed__image {
+		display: block;
+		width: 100%;
+		height: 100%;
+		transition-property: all;
+		transition-duration: 0.3s;
+		transition-timing-function: ease-out;
+		object-fit: cover;
+
+		@include hovers() {
+			transform: scale(1.15);
+		}
+	}
+
+	@include breakpoint(extra-small) {
+		.instagram-feed__description {
+			padding-right: 0;
+		}
+
+		.instagram-feed__image {
+			@include hovers() {
+				transform: none;
+			}
+		}
+	}
+
+	@include breakpoint(small-tablet-portrait) {
+		.instagram-feed__title {
+			margin-top: 7px;
+			margin-bottom: 6px;
+			margin-right: 0;
+			font-size: 26px;
+		}
+
+		.instagram-feed__swiper-wrapper {
+			max-height: 400px;
+			height: 100%;
+		}
+	}
+
+	@include breakpoint(mobile-landscape) {
+		padding-bottom: 0;
+		background: linear-gradient(90deg, $white 0%, $whiteSmoke 50.35%, $white 100%);
+
+		.instagram-feed__swiper-wrapper {
+			max-height: 320px;
+			height: 100%;
+			padding-top: 45px;
+		}
+	}
+
+	@include breakpoint(mobile) {
+		padding-top: 64px;
+
+		.instagram-feed__title {
+			margin-top: 0;
+		}
+
+		.instagram-feed__swiper-wrapper {
+			max-height: 250px;
+			padding-top: 27px;
+			padding-bottom: 15px;
+		}
+	}
+}

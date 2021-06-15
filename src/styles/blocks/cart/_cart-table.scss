@@ -1,0 +1,143 @@
+.cart-table {
+	width: 100%;
+	margin-top: 60px;
+
+	th, td {
+		padding-top: 20px;
+		padding-bottom: 20px;
+		padding-right: 20px;
+		border-bottom: 1px solid #ccc;
+		text-align: left;
+		color: #000;
+	}
+
+	th {
+		font-weight: bold;
+	}
+
+	td {
+		vertical-align: middle;
+	}
+
+	td:last-child,
+	th:last-child {
+		padding-right: 0;
+		padding-left: 20px;
+		text-align: right;
+	}
+
+	.cart-table__product-image-td {
+		width: 150px;
+	}
+
+	.cart-table__product-title {
+		display: inline-block;
+		margin-bottom: 10px;
+		font-size: 20px;
+		color: #000;
+		text-decoration: none;
+		transition: 0.3s all;
+
+		&:hover,
+		&:focus {
+			color: red;
+		}
+	}
+
+	.cart-table__product-option {
+		margin-top: 6px;
+		font-size: 15px;
+
+		a {
+			color: red;
+			text-decoration: none;
+			transition: 0.3s all;
+
+			&:hover,
+			&:focus {
+				text-decoration: underline;
+			}
+		}
+	}
+
+	.cart-table__product-remove {
+		display: inline-block;
+		margin-top: 10px;
+		text-decoration: none;
+		color: red;
+		transition: 0.3s all;
+
+		&:hover,
+		&:focus {
+			text-decoration: underline;
+		}
+	}
+
+	.cart-table__qty {
+		width: 60px;
+		height: 40px;
+		padding: 5px;
+		border: 1px solid #ccc;
+		border-radius: 0;
+		text-align: center;
+
+		transition-duration: 0.3s;
+		transition-property: border-color;
+
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+
+		&:focus {
+			border-color: blue;
+		}
+	}
+
+	@include breakpoint(extra-small) {
+		margin-top: 40px;
+
+		th, td {
+			padding: 15px 0;
+		}
+
+		td:last-child,
+		th:last-child {
+			padding-left: 0;
+			text-align: left;
+		}
+
+		td:not(.cart-table__product-image-td):not(.cart-table__product-info-td) {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+
+		.cart-table__tr {
+			position: relative;
+			padding-bottom: 35px;
+		}
+
+		.cart-table__product-remove {
+			position: absolute;
+			left: 0;
+			bottom: 0;
+		}
+
+		.cart-table__product-image-td {
+			width: 100%;
+			text-align: center;
+
+			img {
+				max-width: 150px;
+			}
+
+			&::before {
+				display: none;
+			}
+		}
+
+		.cart-table__product-title {
+			margin-bottom: 0;
+		}
+	}
+}

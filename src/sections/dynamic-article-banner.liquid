@@ -1,0 +1,57 @@
+{% assign article = articles[section.settings.article] %}
+
+{% if article != blank %}
+	<section class="article-banner">
+		<div class="section-container">
+			<div class="article-banner__wrapper">
+				<div class="article-banner__aspect-ratio-wrapper">
+					{% if article.image %}
+						<picture>
+							<source srcset="{{ article | img_url: '400x' }} 1x, {{ article | img_url: '800x' }} 2x" media="(max-width: 400px)">
+							<source srcset="{{ article | img_url: '767x' }} 1x, {{ article | img_url: '1534x' }} 2x" media="(max-width: 767px)">
+							<source srcset="{{ article | img_url: '991x' }} 1x, {{ article | img_url: '1982x' }} 2x" media="(max-width: 991px)">
+							<source srcset="{{ article | img_url: '1420x' }} 1x, {{ article | img_url: '2840x' }} 2x" media="(min-width: 992px)">
+							<img class="article-banner__image" src="{{ article | img_url: '1420x' }}" alt="{{ article.title }}">
+						</picture>
+					{% else %}
+						<img class="article-banner__empty-image" src="{{ 'logo.png' | asset_url }}" alt="logo">
+					{% endif %}
+				</div>
+
+				<div class="article-banner__content-wrapper">
+					<div class="article-banner__content">
+						<h3 class="article-banner__title">{{ article.title | upcase | truncatewords: 12 }}</h3>
+
+						<div class="article-banner__text rte">{{ article.excerpt_or_content | truncatewords: 31 }}</div>
+
+						<a class="button-read-more" href="{{ article.url }}">
+							READ MORE
+							<div class="icon-container icon-container--color">
+								{% include 'icon-white-arrow' %}
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endif %}
+
+{% schema %}
+{
+	"name": "Article banner",
+	"settings": [
+		{
+		 	"id": "article",
+			"type": "article",
+			"label": "Choose article"
+		}
+	],
+	"presets": [
+		{
+			"name": "Single article banner",
+			"category": "Articles"
+		}
+	]
+}
+{% endschema %}

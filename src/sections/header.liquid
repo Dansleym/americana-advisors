@@ -1,0 +1,472 @@
+{%- assign max_cart_number = 9 -%}
+
+<div data-section-id="{{- section.id -}}" data-section-type="header-section">
+	<div class="content-overlapping js-content-overlapping"></div>
+
+	<header class="header js-header" role="banner">
+		<section class="utility-bar js-utility-bar">
+			<div class="utility-bar__column"></div>
+
+			<h4 class="utility-bar__information">
+				{{- section.settings.utility_bar_text -}}
+			</h4>
+
+			<div class="utility-bar__functional-links">
+				{%- if section.settings.phone_number != "" -%}
+					<a class="utility-bar__phone utility-bar__functional-item"
+					   href="tel:+{{- section.settings.phone_number -}}"
+					>
+						{{- section.settings.phone_number -}}
+					</a>
+				{%- endif -%}
+
+				<a href="#" class="utility-bar__dealer utility-bar__functional-item">
+					{%- if section.settings.find_on_map != "" -%}
+						{% include 'icon-ic_place' %}
+
+						{{- section.settings.find_on_map -}}
+					{%- endif -%}
+				</a>
+
+				<div class="utility-bar__account utility-bar__functional-item">
+					{%- if customer -%}
+						{%- include 'account-switcher' -%}
+					{%- else -%}
+
+						<a href="{{- routes.account_login_url -}}">
+							Login/Sign Up
+						</a>
+					{%- endif -%}
+				</div>
+
+				<div class="utility-bar__language">
+					{%- include 'language-switcher' -%}
+				</div>
+			</div>
+		</section>
+
+		<div class="header__wrapper">
+			<div class="burger-menu js-burger-menu">
+				<div class="burger-menu__burger">
+				</div>
+			</div>
+
+			<div class="sidebar-menu js-sidebar-menu">
+				<nav role="navigation">
+					<ul class="sidebar-menu__list js-sidebar-menu-list">
+						<li class="sidebar-menu__item">
+							<form class="sidebar-menu__search-form js-sidebar-menu-search-form"
+								  action="/search"
+								  method="get"
+								  role="search"
+							>
+								<a class="sidebar-menu__search-icon js-sidebar-menu-search-icon" href="#">
+									{%- include 'icon-search' -%}
+								</a>
+
+								<input class="sidebar-menu__search-input js-sidebar-menu-search-input"
+									   type="search"
+									   name="q"
+									   id="sidebar-search"
+									   value="{{- search.terms | escape -}}"
+									   placeholder="Search"
+								>
+							</form>
+						</li>
+
+						{%- for link in linklists[section.settings.main_linklist].links -%}
+							<li class="sidebar-menu__item">
+								{%- assign shop_title = link.title | downcase -%}
+
+								{%- if shop_title == "shop" -%}
+									<div class="sidebar-menu__link js-sidebar-menu-link" onclick="">
+										{{- link.title | escape -}}
+
+										<div class="sidebar-menu__arrow--rotate">
+											{%- include 'icon-arrow-dropdown' -%}
+										</div>
+									</div>
+
+									<div class="sidebar-menu__submenu-wrapper js-sidebar-menu-submenu-wrapper">
+										<h2 class="title sidebar-menu__shop-title js-sidebar-menu-shop-back">
+											<div class="sidebar-menu__arrow-back">
+												{%- include 'icon-arrow-right' -%}
+											</div>
+
+											{{- link.title | escape -}}
+										</h2>
+
+										<div class="sidebar-menu__shop-block-wrapper">
+											{%- for block in section.blocks -%}
+												{%- assign image = block.settings.shop_category_image -%}
+
+												<div class="sidebar-menu__shop-block">
+													<a class="sidebar-menu__shop-item"
+													   href="{{- block.settings.link_url -}}"
+													   itemprop="url"
+													>
+														<div class="sidebar-menu__shop-image-aspect-ratio">
+															{%- if image != blank -%}
+																<picture>
+																	<source srcset="{{- image | img_url: '350x' -}} 1x, {{- image | img_url: '700x' -}} 2x" media="(max-width: 768px)">
+																	<source srcset="{{- image | img_url: '500x' -}} 1x, {{- image | img_url: '1000x' -}} 2x" media="(max-width: 991px)">
+
+																	<img class="sidebar-menu__shop-image"
+																		 src="{{- image | img_url: "500x" -}}"
+																		 alt="{{- image.alt -}}"
+																	>
+																</picture>
+															{%- else -%}
+																<img class="sidebar-menu__shop-block-no-image"
+																	 src="{{- 'logo.png' | asset_url -}}"
+																	 alt="{{- block.settings.link_text -}}"
+																>
+															{%- endif -%}
+														</div>
+														{%- if block.settings.link_text != "" -%}
+															<div class="sidebar-menu__shop-block-link">
+																<div class="sidebar-menu__shop-block-text">
+																	{{- block.settings.link_text -}}
+																</div>
+
+																{%- include 'icon-arrow-right' -%}
+															</div>
+														{%- endif -%}
+													</a>
+												</div>
+											{%- endfor -%}
+
+											<div class="sidebar-menu__submenu-links sidebar-menu__submenu-block">
+												{%- if section.settings.text_link_first != "" -%}
+													<a class="sidebar-menu__submenu-link"
+													   href="{{- section.settings.link_url_first -}}"
+													>
+														<span class="sidebar-menu__submenu-link-text">
+															{{- section.settings.text_link_first -}}
+														</span>
+
+														{%- include 'icon-arrow-right' -%}
+													</a>
+
+													<p class="sidebar-menu__submenu-information">
+														{{- section.settings.discount_text--first -}}
+													</p>
+												{%- endif -%}
+
+												{%- if section.settings.text_link_second != "" -%}
+													<a class="sidebar-menu__submenu-link sidebar-menu__submenu-link--margin-top"
+													   href="{{- section.settings.link_url_second -}}"
+													>
+														<span class="sidebar-menu__submenu-link-text">
+															{{- section.settings.text_link_second -}}
+														</span>
+
+														{%- include 'icon-arrow-right' -%}
+													</a>
+
+													<p class="sidebar-menu__submenu-information">
+														{{- section.settings.discount_text--second -}}
+													</p>
+												{%- endif -%}
+											</div>
+										</div>
+									</div>
+								{%- else -%}
+									<a class="sidebar-menu__link" href="{{- link.url -}}">
+										{{- link.title | escape -}}
+									</a>
+								{%- endif -%}
+							</li>
+						{%- endfor -%}
+						<li class="sidebar-menu__item">
+							<a class="sidebar-menu__link sidebar-menu__dealer" href="#">
+								<span>
+									{%- include 'icon-ic_place_black' -%}
+									Find a Dealer
+								</span>
+							</a>
+						</li>
+
+						<li class="sidebar-menu__item">
+							{%- if customer -%}
+								<a class="sidebar-menu__link" href="{{- routes.account_logout_url -}}">
+									LOG OUT
+								</a>
+							{%- else -%}
+								<a class="sidebar-menu__link" href="{{- routes.account_login_url -}}">
+									LOGIN/SIGN UP
+								</a>
+							{%- endif -%}
+						</li>
+
+						<li class="sidebar-menu__item">
+							<div class="sidebar-menu__link">
+								<span>CALL US AT:
+									<a href="tel:+{{- section.settings.phone_number -}}">
+										{{- section.settings.phone_number -}}
+									</a>
+								</span>
+							</div>
+						</li>
+					</ul>
+				</nav>
+			</div>
+
+			<a class="header__logo" href="/" itemprop="url">
+				{%- if section.settings.logo != blank -%}
+					{%- capture image_size -%}
+						{{- section.settings.logo_max_width -}}x
+					{%- endcapture -%}
+
+					<img src="{{- section.settings.logo | img_url: image_size -}}"
+						 alt="{{- section.settings.logo.alt | default: shop.name -}} Logo"
+						 itemprop="logo"
+					>
+				{% else %}
+					{{- shop.name -}}
+				{% endif %}
+			</a>
+
+			<nav class="main-menu" role="navigation">
+				<ul class="main-menu__list">
+					{%- for link in linklists[section.settings.main_linklist].links -%}
+						{%- if link.links != blank -%}
+							<li class="main-menu__item">
+								{%- assign shop_title = link.title | downcase -%}
+
+								<a class="main-menu__link {% if shop_title == "shop" %} main-menu__link--shop-active {%- endif -%} "
+								   href="{{- link.url -}}"
+								>
+									{{- link.title | escape -}}
+								</a>
+
+								{%- if link.links != blank -%}
+									<ul>
+										{%- for childlink in link.links -%}
+											{%- if childlink.title == "Shop category" -%}
+												<li class="main-menu__item">
+													<div class="main-menu__submenu-shop">
+														<div class="main-menu__block-wrapper">
+															{%- for block in section.blocks -%}
+																{%- assign image = block.settings.shop_category_image -%}
+
+																<div class="main-menu__submenu-block">
+																	<a class="main-menu__block"
+																	   href="{{ block.settings.link_url }}"
+																	   itemprop="url"
+																	>
+																		<div class="main-menu__image-aspect-ratio">
+																			{%- if image != blank -%}
+																				<picture>
+																					<source srcset="{{- image | img_url: '250x' -}} 1x, {{- image | img_url: '500x' -}} 2x">
+
+																					<img class="main-menu__image"
+																						 src="{{- image | img_url: "250x" -}}"
+																						 alt="{{- image.alt -}}"
+																					>
+																				</picture>
+																			{%- else -%}
+																				<img class="main-menu__no-image"
+																					 src="{{- 'logo.png' | asset_url -}}"
+																					 alt="{{- block.settings.link_text -}}"
+																				>
+																			{% endif %}
+																		</div>
+																		{%- if block.settings.link_text != "" -%}
+																			<div class="main-menu__block-link">
+																				<div class="main-menu__block-text">
+																					{{- block.settings.link_text -}}
+																				</div>
+
+																				{%- include 'icon-arrow-right' -%}
+																			</div>
+																		{%- endif -%}
+																	</a>
+																</div>
+															{% endfor %}
+															<div class="main-menu__submenu-links main-menu__submenu-block">
+																{%- if section.settings.text_link_first != "" -%}
+																	<a class="main-menu__submenu-link"
+																	   href="{{- section.settings.link_url_first -}}"
+																	>
+																		<span class="main-menu__submenu-link-text">
+																			{{- section.settings.text_link_first -}}
+																		</span>
+
+																		{%- include 'icon-arrow-right' -%}
+																	</a>
+
+																	<p class="main-menu__submenu-information">
+																		{{- section.settings.discount_text--first -}}
+																	</p>
+																{%- endif -%}
+
+																{%- if section.settings.text_link_second != "" -%}
+																	<a class="main-menu__submenu-link main-menu__submenu-link--margin-top"
+																	   href="{{- section.settings.link_url_second -}}"
+																	>
+																		<span class="main-menu__submenu-link-text">
+																			{{- section.settings.text_link_second -}}
+																		</span>
+
+																		{%- include 'icon-arrow-right' -%}
+																	</a>
+
+																	<p class="main-menu__submenu-information">
+																		{{- section.settings.discount_text--second -}}
+																	</p>
+																{%- endif -%}
+															</div>
+														</div>
+													</div>
+												</li>
+											{%- endif -%}
+										{%- endfor -%}
+									</ul>
+								{%- endif -%}
+							</li>
+						{%- else -%}
+							<li class="main-menu__item">
+								<a class="main-menu__link" href="{{- link.url -}}">
+									{{- link.title | escape -}}
+								</a>
+							</li>
+						{%- endif -%}
+					{%- endfor -%}
+				</ul>
+			</nav>
+
+			<form class="header__search-form js-header-search-form"
+				  action="/search"
+				  method="get"
+				  role="search"
+			>
+				<div class="header__search-icon js-header-search-icon" type="submit">
+					{%- include 'icon-search' -%}
+				</div>
+
+				<input class="header__search-input js-header-search-input"
+					   type="search"
+					   name="q"
+					   id="main-search"
+					   value="{{- search.terms | escape -}}"
+				>
+			</form>
+
+			<a class="header__cart-icon js-toggle-mini-cart">
+				{%- include 'icon-cart' -%}
+
+				{%- if cart.item_count > 0 -%}
+					{%- if cart.item_count > max_cart_number -%}
+						{%- assign value = max_cart_number | append: '+' -%}
+					{%- else -%}
+						{%- assign value = cart.item_count -%}
+					{%- endif -%}
+
+					<div class="header__cart-by-count js-cart-counter">
+						{{- value -}}
+					</div>
+				{%- endif -%}
+			</a>
+		</div>
+	</header>
+</div>
+
+{% schema %}
+{
+	"name": "Header",
+	"blocks": [
+		{
+			"type": "category",
+			"name": "Category",
+			"limit": 5,
+			"settings": [
+				{
+					"type": "image_picker",
+					"id": "shop_category_image",
+					"label": "Shop category image"
+				},
+				{
+					"type": "url",
+					"id": "link_url",
+					"label": "Button link"
+				},
+				{
+					"type": "text",
+					"id": "link_text",
+					"label": "Button text"
+				}
+			]
+		}
+	],
+	"settings": [
+		{
+			"type": "image_picker",
+			"id": "logo",
+			"label": "Logo image"
+		},
+		{
+			"type": "range",
+			"id": "logo_max_width",
+			"min": 50,
+			"max": 150,
+			"step": 5,
+			"unit": "px",
+			"label": "Custom logo width",
+			"default": 145
+		},
+		{
+			"type": "link_list",
+			"id": "main_linklist",
+			"label": "Menu",
+			"default": "main-menu"
+		},
+		{
+			"type": "text",
+			"id": "utility_bar_text",
+			"label": "Utility bar text"
+		},
+		{
+			"type": "text",
+			"id": "phone_number",
+			"label": "Phone number",
+			"default": "123-456-7890"
+		},
+		{
+			"type": "text",
+			"id": "find_on_map",
+			"label": "Find on map text"
+		},
+		{
+			"type": "text",
+			"id": "text_link_first",
+			"label": "First shop submenu title"
+		},
+		{
+			"type": "text",
+			"id": "discount_text--first",
+			"label": "First discount"
+		},
+		{
+			"type": "url",
+			"id": "link_url_first",
+			"label": "First  shop submenu link"
+		},
+		{
+			"type": "text",
+			"id": "text_link_second",
+			"label": "Second  shop submenu title"
+		},
+		{
+			"type": "text",
+			"id": "discount_text--second",
+			"label": "Second discount"
+		},
+		{
+			"type": "url",
+			"id": "link_url_second",
+			"label": "Second shop submenu link"
+		}
+	]
+}
+{% endschema %}

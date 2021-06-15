@@ -1,0 +1,46 @@
+<section class="collection">
+	<h2 class="title collection__title">
+		{{- collection.title -}}
+	</h2>
+
+	<div class="collection__swiper-container js-collection-swiper-container">
+		<div class="swiper-wrapper">
+			{%- for product in collection.products -%}
+				{%- assign image = product.featured_image -%}
+
+				{%- if product.title != "" -%}
+					<div class="swiper-slide">
+						<a class="collection__block"
+						   href="{{- product.url | within: collection -}}"
+						   itemprop="url"
+						>
+							{%- if image != blank -%}
+								<picture>
+									<source srcset="{{- image | img_url: '60x' -}} 1x, {{- image | img_url: '120x' -}} 2x">
+
+									<img class="collection__image"
+										 src="{{- image | img_url: '60x' -}}"
+										 alt="{{- image.alt -}}"
+									>
+								</picture>
+							{%- else -%}
+								<img class="collection__image"
+									 src="{{- 'logo.png' | asset_url -}}"
+									 alt="{{- product.title -}}"
+								>
+							{%- endif -%}
+
+							<div class="collection__block-link">
+								<div class="collection__block-text">
+									{{- product.title -}}
+								</div>
+
+								{%- include 'icon-arrow-right' -%}
+							</div>
+						</a>
+					</div>
+				{%- endif -%}
+			{%- endfor -%}
+		</div>
+	</div>
+</section>

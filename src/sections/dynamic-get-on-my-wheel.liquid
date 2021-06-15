@@ -1,0 +1,116 @@
+{%- assign title = section.settings.title -%}
+{%- assign description = section.settings.description -%}
+{%- assign background = section.settings.background -%}
+{%- assign background_color = section.settings.background_color -%}
+{%- assign button_text = section.settings.button_text -%}
+{%- assign button_link = section.settings.button_link -%}
+
+{% if background_color == "rgba(0,0,0,0)" %}
+	{%- assign background_color = '#121212' -%}
+{% endif %}
+
+{%- capture container_styles -%}
+	background: {{- background_color | default: '#121212' -}};
+{%- endcapture -%}
+
+{%- capture background_image_styles -%}
+	{%- if background != blank -%}
+		background: url({{- background | img_url: '303x' -}}) no-repeat 50px 10px, {{- background_color -}};
+	{%- endif %}
+{%- endcapture -%}
+
+{%- capture gradient -%}
+	{%- if button_text != blank -%}
+		{%- if button_link != blank -%}
+			background: radial-gradient(ellipse, rgba(255,255,255,0.1) 20%, {{- background_color -}} 75%); background: -webkit-gradient(radial, 50% 50%, 30, 50% 50%, 178, from(rgba(255,255,255,0.1)), to({{- background_color -}}));
+		{%- endif -%}
+	{%- endif -%}
+{%- endcapture -%}
+
+{%- if title != blank and  description != blank and background != blank  and button_text != blank and button_link != blank -%}
+	<section
+			class="section-container get-on-my-wheel"
+			{%- if container_styles -%}style="{{- container_styles | strip_newlines -}}"{%- endif -%}
+	>
+		<div class="get-on-my-wheel__background-image"
+			 {%- if background_image_styles -%}style="{{- background_image_styles | strip_newlines -}}"{%- endif -%}>
+		</div>
+
+		<div class="get-on-my-wheel__gradient"
+			 {%- if gradient -%}style="{{- gradient | strip_newlines -}}"{%- endif -%}>
+		</div>
+
+		{%- if title != blank or description != blank -%}
+			<div class="get-on-my-wheel__text">
+				{%- if title != blank -%}
+					<h3 class="title get-on-my-wheel__text-title">
+						{{- title -}}
+					</h3>
+				{%- endif -%}
+
+				{%- if description != blank -%}
+					<p class="small-p get-on-my-wheel__text-description">
+						{{- description -}}
+					</p>
+				{%- endif -%}
+			</div>
+		{%- endif -%}
+
+		<div class="get-on-my-wheel__button">
+			{%- if button_text != blank and button_link != blank -%}
+				<a href="{{- button_link -}}" class="button button-cta">{{- button_text -}}
+					<div class="icon-container">
+						{%- include 'icon-white-arrow' -%}
+					</div>
+				</a>
+			{%- endif -%}
+		</div>
+	</section>
+{%- endif -%}
+{% schema %}
+{
+	"name": "Get on my wheel",
+	"settings": [
+		{
+			"type": "text",
+			"id": "title",
+			"label": "Title",
+			"default": "Get on my wheel"
+		},
+		{
+			"type": "text",
+			"id": "description",
+			"label": "Description",
+			"default": "Enter to win a wheel set of your choice. Its free to enter!"
+		},
+		{
+			"type": "text",
+			"id": "button_text",
+			"label": "Button text",
+			"default": "ENTER TO WIN"
+		},
+		{
+			"type": "text",
+			"id": "button_link",
+			"label": "Button link",
+			"default": "https://utd-trainee-roval.myshopify.com/"
+		},
+		{
+			"type": "image_picker",
+			"id": "background",
+			"label": "Image"
+		},
+		{
+			"type": "color",
+			"id": "background_color",
+			"label": "Background color"
+		}
+	],
+	"presets": [
+		{
+			"name": "Get on my wheel",
+			"category": "Sections"
+		}
+	]
+}
+{% endschema %}

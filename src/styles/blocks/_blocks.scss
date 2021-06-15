@@ -1,0 +1,66 @@
+// General
+@import url('general/_responsive-table.scss');
+@import url('general/_popup.scss');
+@import url('general/_newsletter-popup.scss');
+@import url('general/_rte.scss');
+
+// Cart page
+@import url('cart/_cart.scss');
+@import url('cart/_cart-table.scss');
+
+//Sections
+@import url("header/header.scss");
+@import url("header/burger-menu.scss");
+@import url("header/sidebar-menu.scss");
+@import url("header/utility-bar.scss");
+@import url('product-benefits/_product-benefits.scss');
+@import url('main-slider/_main-slider.scss');
+@import url('shop-now/shop-now.scss');
+@import url('product-specifications/_product-specifications.scss');
+@import url('two-col-extra-content/_two-col-extra-content.scss');
+@import url('collection/collection.scss');
+@import url('how-we-made-it/_how-we-made-it.scss');
+
+@import url("main-menu/main-menu.scss");
+@import url("content-overlapping/content-overlapping.scss");
+@import url('get-on-my-wheel/_get-onmy-wheel.scss');
+@import url("article-banner/article-banner.scss");
+@import url('skewed-articles/_skewed-articles.scss');
+@import url('video-section/_video-section.scss');
+@import url('instagram-feed/_instagram-feed.scss');
+@import url('newsletter/_newsletter.scss');
+@import url('footer/_footer.scss');
+
+//PLP
+@import url('collection-banner/_collection-banner.scss');
+@import url('specification-chart/_specification-chart.scss');
+@import url('collection-items/_collection-items.scss');
+
+//PDP
+@import url('product/_product.scss');
+@import url('product/_slider.scss');
+@import url('product/_configurator.scss');
+
+//404
+@import url('page-not-found/_page-not-found.scss');
+
+//account
+@import url('login/_login.scss');
+@import url('sign-up/_sign-up.scss');
+
+@import url('account/_account.scss');
+@import url('addresses/_adresses.scss');
+
+//Search
+@import url('search/search.scss');
+@import url('search/search-card.scss');
+
+//Blog
+@import url('blog/blog.scss');
+
+//Cart
+@import url('minicart/_minicart.scss');
+@import url('cart-item/_cart-item.scss');
+@import url('cart-item/_cart-item-options.scss');
+@import url('cart-item/_cart-item-quantity.scss');
+@import url('cart-item/_cart-item-price.scss');

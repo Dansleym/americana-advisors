@@ -1,0 +1,84 @@
+{%- assign title = section.settings.title -%}
+{%- assign how_we_made_it = product.metafields.how-we-made-it -%}
+
+{%- capture section_background -%}
+	background-color: #121212;
+{%- endcapture -%}
+
+{%- capture block_background -%}
+	background-color: #292929;
+{%- endcapture -%}
+
+{% if how_we_made_it.first_block_image != blank or how_we_made_it.second_block_image != blank and how_we_made_it.first_block_title != blank or how_we_made_it.second_block_title != blank and how_we_made_it.first_block_text != blank or how_we_made_it.second_block_text != blank -%}
+	<section class="section-container how-we-made-it" style="{{- section_background -}}">
+		{%- if title != blank -%}
+			<div class="title how-we-made-it__title">
+				{{- title -}}
+			</div>
+		{%- endif -%}
+
+		<div class="how-we-made-it__blocks">
+			{%- if how_we_made_it.first_block_image != blank and how_we_made_it.first_block_title != blank and how_we_made_it.first_block_text != blank -%}
+				<div class="how-we-made-it__block" style="{{- block_background -}}">
+					<div class="how-we-made-it__aspect-ratio-container">
+						<div class="how-we-made-it__aspect-ratio-wrapper">
+							<div class="how-we-made-it__block-image">
+								{%- for image in how_we_made_it.first_block_image -%}
+									<img src="{{- image.src -}}" alt="{{- image.alt -}}" width="100%"/>
+								{%- endfor -%}
+							</div>
+						</div>
+					</div>
+
+					<div class="how-we-made-it__block-content">
+						<div class="how-we-made-it__block-title">
+							{{- how_we_made_it.first_block_title -}}
+						</div>
+
+						<div class="how-we-made-it__block-text">
+							{{- how_we_made_it.first_block_text -}}
+						</div>
+					</div>
+				</div>
+			{%- endif -%}
+
+			{%- if how_we_made_it.second_block_image != blank and how_we_made_it.second_block_title != blank and how_we_made_it.second_block_text != blank -%}
+				<div class="how-we-made-it__block" style="{{- block_background -}}">
+					<div class="how-we-made-it__aspect-ratio-container">
+						<div class="how-we-made-it__aspect-ratio-wrapper">
+							<div class="how-we-made-it__block-image">
+								{% for image in how_we_made_it.second_block_image %}
+									<img src="{{ image.src }}" alt="{{ image.alt }}" width="100%"/>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+
+					<div class="how-we-made-it__block-content">
+						<div class="how-we-made-it__block-title">
+							{{- how_we_made_it.second_block_title -}}
+						</div>
+
+						<div class="how-we-made-it__block-text">
+							{{- how_we_made_it.second_block_text -}}
+						</div>
+					</div>
+				</div>
+			{%- endif -%}
+		</div>
+	</section>
+{% endif %}
+
+{% schema %}
+{
+	"name": "How we made it",
+	"settings": [
+		{
+			"type": "text",
+			"id": "title",
+			"label": "Title of the sections",
+			"default": "HOW WE MADE IT"
+		}
+	]
+}
+{% endschema %}

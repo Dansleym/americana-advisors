@@ -1,0 +1,25 @@
+<div class="account-switcher js-account-switcher">
+	<a class="account-switcher__wrapper js-account-switcher-wrapper" href="#">
+		<span class="account-switcher__current-account js-account-switcher-current-account">
+				Account
+		</span>
+
+		<span class="account-switcher__dropdown-icon">
+			{%- include 'icon-dropdown' -%}
+		</span>
+	</a>
+
+	<div class="account-switcher__dropdown">
+		<div class="account-switcher__dropdown-item">
+			<a href="{{- routes.account_addresses_url -}}">
+				View Addresses
+			</a>
+		</div>
+
+		<div class="account-switcher__dropdown-item">
+			<a href="{{- routes.account_logout_url -}}">
+				Log out
+			</a>
+		</div>
+	</div>
+</div>

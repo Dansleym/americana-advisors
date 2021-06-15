@@ -1,0 +1,138 @@
+.how-we-made-it {
+	margin-bottom: 20px;
+	padding-top: 68px;
+	padding-bottom: 64px;
+	padding-left: 30px;
+	padding-right: 30px;
+
+	.how-we-made-it__title {
+		margin-bottom: 31px;
+		text-align: center;
+		color: $white;
+	}
+
+	.how-we-made-it__blocks {
+		display: flex;
+		justify-content: center;
+	}
+
+	.how-we-made-it__block {
+		display: flex;
+		max-width: 670px;
+		width: 100%;
+
+		&:first-child {
+			margin-right: 20px;
+		}
+	}
+
+	.how-we-made-it__aspect-ratio-container {
+		min-width: 56.36%;
+	}
+
+	.how-we-made-it__aspect-ratio-wrapper {
+		position: relative;
+		padding-top: 97.4%;
+	}
+
+	.how-we-made-it__block-image {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		-webkit-clip-path: polygon(0 0, 95% 0, 78% 100%, 0 100%);
+		clip-path: polygon(0 0, 95% 0, 78% 100%, 0 100%);
+	}
+
+	.how-we-made-it__block-content {
+		max-width: 262px;
+		padding-top: 44px;
+		padding-right: 10px;
+	}
+
+	.how-we-made-it__block-title p {
+		font-family: $Calibre;
+		font-size: 22px;
+		font-weight: 600;
+		font-style: italic;
+		line-height: 1.25;
+		letter-spacing: 0.18px;
+		color: $white;
+	}
+
+	.how-we-made-it__block-text p {
+		font-family: $Calibre;
+		font-size: 16px;
+		line-height: 1.8;
+		letter-spacing: 0;
+		color: $white;
+	}
+
+	@include breakpoint(medium) {
+		margin-top: 20px;
+		padding-left: 25px;
+		padding-right: 25px;
+
+		.how-we-made-it__blocks {
+			flex-direction: column;
+			align-items: center;
+		}
+
+		.how-we-made-it__block {
+			max-width: 719px;
+
+			&:first-child {
+				margin-bottom: 20px;
+				margin-right: 0;
+			}
+		}
+
+		.how-we-made-it__block-content {
+			max-width: 285px;
+		}
+		.how-we-made-it__aspect-ratio-wrapper {
+			padding-top: 97.5%;
+		}
+	}
+
+	@include breakpoint(small) {
+		padding-bottom: 62px;
+
+		.how-we-made-it__aspect-ratio-container {
+			min-width: 56.55%;
+		}
+	}
+
+	@include breakpoint(small-tablet-portrait) {
+		margin-top: 10px;
+		padding-left: 15px;
+		padding-right: 15px;
+
+		.how-we-made-it__block {
+			flex-direction: column;
+		}
+
+		.how-we-made-it__aspect-ratio-wrapper {
+			padding-top: 72.8%;
+		}
+
+		.how-we-made-it__block-image {
+			-webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 79%);
+			clip-path: polygon(0 0, 100% 0, 100% 100%, 0 79%);
+		}
+
+		.how-we-made-it__block-content {
+			max-width: 345px;
+			padding-top: 24px;
+			padding-bottom: 56px;
+			padding-left: 20px;
+			padding-right: 20px;
+		}
+
+		.how-we-made-it__block-text p {
+			margin-top: 5px;
+		}
+	}
+}

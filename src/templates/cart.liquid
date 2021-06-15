@@ -1,0 +1,25 @@
+<div class="cart">
+	<div class="cart__container">
+		<h1 class="cart__title">
+			{{- 'cart.general.title' | t -}}
+		</h1>
+
+		<div class="cart__strap">
+			<a href="{{- routes.root_url -}}"
+			   class="cart__home-link"
+			>
+				<div class="cart__arrow-icon">
+					{% include 'icon-black-arrow' %}
+				</div>
+
+				{{- 'cart.label.root_capitalize' | t -}}
+			</a>
+		</div>
+
+		<div class="js-cart-content">
+
+		</div>
+	</div>
+</div>
+
+{%- section 'cart-newsletter' -%}

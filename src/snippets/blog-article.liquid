@@ -1,0 +1,56 @@
+{%- assign link = article.url -%}
+{%- assign image = article.image -%}
+{%- assign title = article.title -%}
+
+<article class="blog-article">
+	<a href="{{- link -}}" class="blog-article__image-preview">
+		<div class="blog-article__image-wrapper">
+			{%- if image -%}
+				<picture>
+					<source srcset="{{- image | img_url: '400x' -}} 1x, {{- image | img_url: '800x' -}} 2x" media="(max-width: 400px)">
+					<source srcset="{{- image | img_url: '767x' -}} 1x, {{- image | img_url: '1534x' -}} 2x" media="(max-width: 767px)">
+					<source srcset="{{- image | img_url: '991x' -}} 1x, {{- image | img_url: '1982x' -}} 2x" media="(max-width: 991px)">
+					<source srcset="{{- image | img_url: '700x' -}} 1x, {{- image | img_url: '1400x' -}} 2x" media="(min-width: 1400px)">
+					<source srcset="{{- image | img_url: '500x' -}} 1x, {{- image | img_url: '1000x' -}} 2x" media="(min-width: 992px)">
+					<img class="blog-article__image" src="{{- image | img_url: '700x' -}}" alt="{{- title -}}">
+				</picture>
+			{% else %}
+				<img class="blog-article__empty-image" src="{{- 'logo.png' | asset_url -}}" alt="{{- title -}}">
+			{% endif %}
+		</div>
+	</a>
+
+	<h4 class="blog-article__title">
+		{{- article.title | upcase | truncatewords: 12 -}}
+	</h4>
+
+	<div class="blog-article__text">
+		{{- article.excerpt_or_content | truncatewords: 31 -}}
+
+		<a href="{{ article.url }}" class="blog-article__read-more">
+			More
+		</a>
+	</div>
+
+	{% if blog.comments_enabled? or article.tags.size > 0 %}
+		<ul class="blog-article__tags-list">
+			{% if blog.comments_enabled? %}
+				<li>
+					<a href="{{ article.url }}#comments">
+						{{- 'blogs.comments.with_count' | t: count: article.comments_count -}}
+					</a>
+				</li>
+			{% endif %}
+
+			{% if article.tags.size > 0 %}
+				{% for tag in article.tags %}
+					<li>
+						<a class="blog-article__tags-link" href="{{ blog.url }}/tagged/{{ tag | handle }}">
+							{{- tag -}}
+						</a>
+					</li>
+				{% endfor %}
+			{% endif %}
+		</ul>
+	{% endif %}
+</article>

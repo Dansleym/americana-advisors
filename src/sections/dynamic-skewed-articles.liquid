@@ -1,0 +1,117 @@
+{%- if section.blocks.size > 0 -%}
+	<section class="skewed-articles">
+		<div class="skewed-articles__wrapper">
+			{%- for block in section.blocks -%}
+				{%- assign article = articles[block.settings.article_content] -%}
+
+				{%- if article != blank -%}
+					{%- assign image = article.image -%}
+					{%- assign iteration = forloop.index | modulo: 2 -%}
+
+					{%- if iteration == 0 -%}
+						{%- capture reverse_post -%} skewed-articles__post--reverse {%- endcapture -%}
+						{%- capture reverse_image -%} skewed-articles__image--reverse {%- endcapture -%}
+						{%- capture reverse_article -%} skewed-articles__article--reverse {%- endcapture -%}
+					{%- endif -%}
+
+					<div class="skewed-articles__post {{ reverse_post }}">
+						<div class="skewed-articles__aspect-ratio-container">
+							<div class="skewed-articles__aspect-ratio-wrapper">
+								{%- if image != blank -%}
+									<picture>
+										<source srcset="{{ image | img_url: '400x' }} 1x, {{ image | img_url: '800x' }} 2x" media="(max-width: 400px)">
+										<source srcset="{{ image | img_url: '767x' }} 1x, {{ image | img_url: '1534x' }} 2x" media="(max-width: 767px)">
+										<source srcset="{{ image | img_url: '991x' }} 1x, {{ image | img_url: '1982x' }} 2x" media="(max-width: 991px)">
+										<source srcset="{{ image | img_url: '700x' }} 1x, {{ image | img_url: '1400x' }} 2x" media="(min-width: 1400px)">
+										<source srcset="{{ image | img_url: '500x' }} 1x, {{ image | img_url: '1000x' }} 2x" media="(min-width: 992px)">
+
+										<img class="skewed-articles__image {{ reverse_image }}"
+											 src="{{ image | img_url: '700x' }}"
+											 alt="{{ image.alt }}"
+										/>
+									</picture>
+								{%- else -%}
+									<img class="skewed-articles__alternative-image"
+										 src="{{ 'logo.png' | asset_url }}"
+										 alt="{{ article.title }}"
+									/>
+								{%- endif -%}
+							</div>
+						</div>
+
+						<div class="skewed-articles__article {{ reverse_article }}">
+							{%- if block.settings.article_subtitle != "" -%}
+								<h4 class="skewed-articles__subtitle">
+									{{- block.settings.article_subtitle | upcase | truncatewords: 12 -}}
+								</h4>
+							{%- endif -%}
+
+							<h3 class="skewed-articles__title">
+								{{- article.title | upcase | truncatewords: 12 -}}
+							</h3>
+
+							<div class="rte skewed-articles__content">
+								{{- article.excerpt_or_content | truncatewords: block.settings.count_view_words -}}
+							</div>
+
+							<a class="button-read-more skewed-articles__button" href="{{- article.url -}}">
+								{{- section.settings.article_links_text -}}
+
+								<span class="icon-container icon-container--color">
+									{%- include 'icon-white-arrow' -%}
+								</span>
+							</a>
+						</div>
+					</div>
+				{%- endif -%}
+			{%- endfor -%}
+		</div>
+	</section>
+{%- endif -%}
+
+{% schema %}
+{
+	"name": "Skewed Articles",
+	"settings": [
+		{
+			"id": "article_links_text",
+			"type": "text",
+			"label": "Link text on articles",
+			"default": "READ MORE"
+		}
+	],
+	"blocks": [
+		{
+			"type": "skew-article",
+			"name": "Skewed Article",
+			"settings": [
+				{
+					"type": "article",
+					"id": "article_content",
+					"label": "Article to skewed section"
+				},
+				{
+					"type": "text",
+					"id": "article_subtitle",
+					"label": "Article subtitle"
+				},
+				{
+					"type": "range",
+					"id": "count_view_words",
+					"min": 10,
+					"max": 100,
+					"step": 1,
+					"label": "Limit the amount of text displayed",
+					"default": 31
+				}
+			]
+		}
+	],
+	"presets": [
+		{
+			"name": "Skewed Articles",
+			"category": "Articles"
+		}
+	]
+}
+{% endschema %}

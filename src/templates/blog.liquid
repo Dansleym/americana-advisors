@@ -1,0 +1,26 @@
+<section class="blog">
+	<div class="section-container">
+		{%- paginate blog.articles by 6 -%}
+		{%- assign blog_title = blog.title -%}
+			{%- if current_tags -%}
+				{%- capture blog_title -%}
+					{{- blog.title | link_to: blog.url -}} - {{- current_tags.first -}}
+				{%- endcapture -%}
+			{%- endif -%}
+
+			<h1 class="blog__title">{{- blog_title | upcase -}}</h1>
+
+			<div class="blog__article-wrapper">
+				{%- for article in blog.articles -%}
+					<div class="blog__article-item">
+						{%- include 'blog-article' -%}
+					</div>
+				{%- endfor -%}
+			</div>
+			{%- if paginate.pages > 1 -%}
+				{%- include 'pagination' -%}
+			{%- endif -%}
+		{%- endpaginate -%}
+	</div>
+</section>
+

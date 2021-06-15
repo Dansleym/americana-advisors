@@ -1,0 +1,75 @@
+.specification-chart {
+	&.specification-chart--light {
+		.specification-chart__title {
+			color:$lightBlack;
+		}
+
+		.specification-chart__level-box-item {
+			background-color: $gainsboroDarken;
+
+			&.specification-chart__level-box-item--active {
+				background-color: $suvaGrey;
+			}
+		}
+	}
+
+	&.specification-chart--dark {
+		.specification-chart__title {
+			color: $whiteSmoke;
+		}
+
+		.specification-chart__level-box-item {
+			background-color: $neroLight;
+
+			&.specification-chart__level-box-item--active {
+				background-color: $dimGray;
+			}
+		}
+	}
+
+	.specification-chart__title {
+		font-size: 13px;
+		font-weight: 600;
+		line-height: 1.4;
+	}
+
+	.specification-chart__level-box {
+		display: flex;
+		margin-bottom: 15px;
+	}
+
+	.specification-chart__level-box-item {
+		height: 12px;
+		width: 34px;
+		margin-right: 2px;
+		background-color: $nero;
+		transform: skewX(-15deg);
+
+		&:last-child {
+			&::after {
+				content: '';
+				position: relative;
+				left: 25px;
+				display: block;
+				width: 10px;
+				height: 12px;
+				background-color: inherit;
+				transform: skewX(15deg);
+			}
+		}
+
+		&:first-child {
+			&::before {
+				content: '';
+				position: relative;
+				right: 2px;
+				display: block;
+				width: 10px;
+				height: 12px;
+				background-color: inherit;
+				transform: skewX(15deg);
+			}
+		}
+	}
+
+}

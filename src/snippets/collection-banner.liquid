@@ -1,0 +1,49 @@
+{%- assign main_description = collection.description -%}
+{%- assign additional_description = collection.metafields.accentuate.additional_text -%}
+{%- assign show_more_button = collection.metafields.accentuate.show_more_text -%}
+{%- assign image = collection.image -%}
+
+{%- if image != blank or main_description != blank -%}
+	<section class="collection-banner">
+		<div class="collection-banner__wrapper">
+			{%- if image != blank -%}
+				<div class="collection-banner__image-wrapper">
+					<picture>
+						<source srcset="{{ image | img_url: '400x' }} 1x, {{ image | img_url: '800x' }} 2x" media="(max-width: 400px)">
+						<source srcset="{{ image | img_url: '767x' }} 1x, {{ image | img_url: '1534x' }} 2x" media="(max-width: 767px)">
+						<source srcset="{{ image | img_url: '991x' }} 1x, {{ image | img_url: '1982x' }} 2x" media="(max-width: 991px)">
+						<source srcset="{{ image | img_url: '2800x' }} 1x, {{ image | img_url: '5600x' }} 2x" media="(min-width: 1400px)">
+						<source srcset="{{ image | img_url: '1420x' }} 1x, {{ image | img_url: '2840x' }} 2x" media="(min-width: 992px)">
+
+						<img class="collection-banner__image"
+							 src="{{ image | img_url: '1420x' }}"
+							 alt="{{ collection.title }}"
+						/>
+					</picture>
+				</div>
+			{%- endif -%}
+
+			{%- if main_description != blank -%}
+				<div class="collection-banner__content js-accordion">
+					<div class="collection-banner__main-text">
+						{{- main_description -}}
+					</div>
+
+					{%- if additional_description != blank -%}
+						<div class="collection-banner__show-more js-animation-toggler js-accordion-toggler">
+							{{- show_more_button -}}
+
+							<div class="collection-banner__arrow js-animated-target">
+								{%- include 'icon-arrow-dropdown' -%}
+							</div>
+						</div>
+
+						<div class="collection-banner__additional-text js-hidden-content js-accordion-content">
+							{{- additional_description -}}
+						</div>
+					{%- endif -%}
+				</div>
+			{%- endif -%}
+		</div>
+	</section>
+{%- endif -%}

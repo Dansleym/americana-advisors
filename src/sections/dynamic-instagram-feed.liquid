@@ -1,0 +1,72 @@
+{%- assign instagram_url = section.settings.account_source -%}
+{%- assign title = section.settings.title -%}
+{%- assign description = section.settings.description -%}
+
+{%- if account_source != blank -%}
+	{%- assign reference = instagram_url -%}
+{% else %}
+	{%- assign reference = '#' -%}
+{%- endif -%}
+
+{%- if title != blank -%}
+	<section class="instagram-feed section-container">
+		<h3 class="instagram-feed__title h3">
+			<a href="{{- reference -}}"
+			   class="instagram-feed__source-link"
+			   target="_blank"
+			>
+				{{- title | prepend: '@' -}}
+			</a>
+		</h3>
+
+		{%- if description != blank -%}
+			<p class="instagram-feed__description">{{- description -}}</p>
+		{%- endif -%}
+
+		{%- if section.settings.token != blank -%}
+			<div class="swiper-container instagram-feed__swiper-container js-instafeed-swiper">
+				<div class="swiper-wrapper instagram-feed__swiper-wrapper js-instafeed js-instafeed-swiper-wrapper"
+					 data-token="{{- section.settings.token -}}"
+				>
+				</div>
+			</div>
+		{%- endif -%}
+	</section>
+{%- endif -%}
+
+{% schema %}
+  {
+	  "name": "Instagram Feed",
+	  "settings": [
+		{
+			"type": "url",
+			"id": "instagram_url",
+			"label": "Instagram url"
+		},
+		{
+			"type": "text",
+			"id": "title",
+			"label": "Username Account",
+			"default": "USERNAME"
+		},
+		{
+			"type": "text",
+			"id": "description",
+			"label": "Description",
+			"default": "Follow us on Instagram to see what we're up to."
+		},
+		{
+			"type": "text",
+			"id": "token",
+			"label": "Access Token"
+		}
+	  ],
+	  "presets": [
+		  {
+			  "name": "Instagram Feedback",
+			  "category": "Instagram"
+		  }
+	  ]
+  }
+
+{% endschema %}

@@ -1,0 +1,127 @@
+{%- assign cardsOnPage = 8 -%}
+{%- assign results_count = search.results_count -%}
+
+{%- for item in search.results -%}
+	{%- if item.object_type == 'article' -%}
+		{%- assign results_count = results_count | minus: 1 -%}
+	{%- endif -%}
+{%- endfor -%}
+
+<div class="search">
+	{%- paginate search.results by cardsOnPage -%}
+		<h1 class="search__title">
+			{%- if search.performed -%}
+				{%- if results_count == 0 -%}
+					{{- 'general.search.no_results_html' | t: terms: search.terms | escape -}}
+				{%- else -%}
+					{{- 'general.search.results_for_html' | t: terms: search.terms | escape -}}
+				{%- endif -%}
+			{%- else -%}
+				{{- 'general.search.title' | t -}}
+			{%- endif -%}
+		</h1>
+
+		{%- if results_count != 0 -%}
+			<h3 class="search__text">
+				{{- 'general.search.results_count' | t: count: results_count | escape -}}
+			</h3>
+
+			<h3 class="search__subtitle">
+				{{- Products -}}
+			</h3>
+		{%- endif -%}
+
+		{%- if search.performed and item.object_type != 'article' -%}
+			<ul class="search__card-container">
+				{%- for item in search.results -%}
+					{%- if item.object_type != 'article' -%}
+						<li class="search-card">
+							{%- assign image = item.image | default: item.featured_image -%}
+							<a class="search-card__link" href="{{- item.url | within: collection -}}"
+							   title="{{- item.title | escape -}}"
+							>
+								{%- if image != blank -%}
+									<div class="search-card__image-wrapper">
+										<picture>
+											<source srcset="{{- image | img_url: '350x' -}} 1x, {{- image | img_url: '700x' -}} 2x" media="(min-width: 992px)">
+											<source srcset="{{- image | img_url: '440x' -}} 1x, {{- image | img_url: '880x' -}} 2x" media="(max-width: 991px)">
+
+											<img class="search-card__image"
+												 src="{{- image | img_url: '400x' -}}"
+												 alt="{{- image.alt -}}"
+											>
+										</picture>
+									</div>
+								{%- else -%}
+									<div class="search-card__image-wrapper search-card__image-wrapper--no-image">
+										<img class="search-card__no-image"
+											 src="{{- 'logo.png' | asset_url -}}"
+											 alt="{{- item.title | escape -}}"
+										>
+									</div>
+								{%- endif -%}
+							</a>
+
+							<a class="search-card__description"
+							   href="{{- item.url | within: collection -}}"
+							   title="{{- item.title | escape -}}"
+							>
+								<h5 class="search-card__title">
+									{{- item.title -}}
+								</h5>
+
+								{%- if item.object_type == 'product' -%}
+									<p class="search-card__price">
+										{%- if item.compare_at_price > item.price -%}
+											{%- if item.price_varies -%}
+												{%- assign sale_price = item.price | money -%}
+
+												{{ 'products.product.on_sale_from_html' | t: price: sale_price }}
+											{%- else -%}
+												{{ 'products.product.on_sale' | t }}
+
+												<span itemprop="price">
+													{{ item.price | money }}
+												</span>
+											{%- endif -%}
+											<span class="visually-hidden">
+												{{ 'products.product.regular_price' | t }}
+										    </span>
+
+											<s>
+												{{ item.compare_at_price | money }}
+											</s>
+										{%- else -%}
+											{%- if item.price_varies -%}
+												{%- assign price = item.price | money -%}
+
+												<span itemprop="price">
+													{{ 'products.product.from_text_html' | t: price: price }}
+												</span>
+											{%- else -%}
+												<span itemprop="price">
+													{{ item.price | money }}
+											 	</span>
+											{%- endif -%}
+										{%- endif -%}
+
+										{%- unless item.available -%}
+											{{ 'products.product.sold_out' | t }}
+										{%- endunless -%}
+									</p>
+								{%- else -%}
+									<p>
+										{{- item.content | strip_html | truncatewords: 50 -}}
+									</p>
+								{%- endif -%}
+							</a>
+						</li>
+					{%- endif -%}
+				{%- endfor -%}
+			</ul>
+			{%- if paginate.pages > 1 -%}
+				{%- include 'pagination' -%}
+			{%- endif -%}
+		{%- endif -%}
+	{%- endpaginate -%}
+</div>

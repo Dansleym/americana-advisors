@@ -1,0 +1,121 @@
+{% assign footer_linklist = section.settings.footer_linklist %}
+{% assign logo = section.settings.logo %}
+{% assign logo_width_range = section.settings.logo_width_range %}
+{% assign follow_us_title = section.settings.follow_us_title %}
+{% assign copyright = section.settings.copyright %}
+{% assign social_accounts = 'Facebook, Twitter, Pinterest, Instagram, Snapchat, Tumblr, YouTube, Vimeo, LinkedIn' | split: ', ' %}
+{% assign show_follow_us = false %}
+
+<footer class="footer">
+	<div class="section-container">
+		<div class="footer__main-content">
+			<div class="footer__logo-wrapper">
+				<a href="/" class="footer__logo">
+					{% if logo != blank %}
+						{% capture image_size %}{{ logo_width_range }}x{% endcapture %}
+						<img src="{{ logo | img_url: image_size }}"
+							 alt="{{ logo.alt | default: shop.name }} Logo" itemprop="logo">
+					{% else %}
+						{{ shop.name }}
+					{% endif %}
+				</a>
+			</div>
+
+			{% if footer_linklist != blank %}
+				<nav class="footer__navigation">
+					{% for link in linklists[footer_linklist].links %}
+						{% if link.links != blank %}
+							<div class="footer__navigation-column">
+								<h4 class="footer__navigation-header">{{ link.title }}</h4>
+
+								<ul>
+									{% for child_link in link.links %}
+										<li class="footer__navigation-item">
+											<a href="{{ child_link.url }}"
+											   class="footer__navigation-link">{{ child_link.title }}</a>
+										</li>
+									{% endfor %}
+								</ul>
+							</div>
+						{% endif %}
+					{% endfor %}
+				</nav>
+			{% endif %}
+
+			{% capture follow_us %}
+				<div class="footer__follow-us">
+					<h4 class="footer__navigation-header">{{ follow_us_title | upcase }}</h4>
+
+					<div class="footer__social-links">
+						{% for social in social_accounts %}
+							{% assign social_handle = social | handleize %}
+							{% capture social_link %}social_{{ social_handle }}_link{% endcapture %}
+							{% capture social_icon %}icon-{{ social_handle }}{% endcapture %}
+
+							{% if settings[social_link] != blank %}
+								{% assign show_follow_us = true %}
+
+								<a href="{{ settings[social_link] }}"
+								   title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: social }}"
+								   target="_blank" class="footer__social-link">
+									{% include social_icon %}
+								</a>
+							{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+			{% endcapture %}
+
+			{% if show_follow_us %}
+				{{ follow_us }}
+			{% endif %}
+		</div>
+
+		<div class="footer__bottom-content">
+			{% include 'language-switcher' %}
+
+			<div class="footer__copyright">&copy {{ 'now' | date: "%Y" }}. {{ copyright }}</div>
+		</div>
+	</div>
+</footer>
+
+{% schema %}
+{
+	"name": "Footer",
+	"settings": [
+		{
+			"type": "link_list",
+			"id": "footer_linklist",
+			"label": "Navigation links",
+			"default": "footer"
+		},
+		{
+			"type": "image_picker",
+			"id": "logo",
+			"label": "Logo image"
+		},
+		{
+			"type": "range",
+			"id": "logo_width_range",
+			"min": 50,
+			"max": 150,
+			"step": 1,
+			"unit": "px",
+			"label": "Logo width range",
+			"default": 144
+		},
+		{
+			"type": "text",
+			"id": "follow_us_title",
+			"default": "Follow us",
+			"label": "Follow us title"
+		},
+		{
+			"type": "text",
+			"id": "copyright",
+			"default": "Roval Components. All Rights Reserved.",
+			"label": "Footer copyright text"
+		}
+	]
+}
+{% endschema %}

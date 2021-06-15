@@ -1,0 +1,73 @@
+{%- assign controls_view = section.settings.controls_view -%}
+{%- assign title_view = section.settings.title_view -%}
+{%- assign controlls = 1 -%}
+{%- assign section_title = section.settings.section_title -%}
+{%- assign video_link = section.settings.video_link -%}
+{%- assign image_background = section.settings.image_background -%}
+
+{%- if controls_view != true -%}
+	{%- assign controlls = 0 -%}
+{%- endif -%}
+
+{%- capture section_style -%}
+	padding: 0;
+{%- endcapture -%}
+
+{%- capture src -%}
+	https://www.youtube.com/embed/{{- video_link.id -}}?controls={{- controlls -}}&showinfo=0&enablejsapi=1&version=3&playerapiid=ytplayer"
+{%- endcapture -%}
+
+{%- capture video_settings -%}
+	frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
+{%- endcapture -%}
+
+{%- if video_link != blank -%}
+
+	{% include 'video-section.liquid' %}
+
+{%- endif -%}
+
+{% schema %}
+{
+	"name": "Video section",
+	"settings": [
+		{
+			"type": "text",
+			"id": "section_title",
+			"label": "Section_title",
+			"default": "TEMPLATE HEADER"
+		},
+		{
+			"type": "video_url",
+			"accept": [
+				"youtube"
+			],
+			"id": "video_link",
+			"label": "Video link"
+		},
+		{
+			"type": "checkbox",
+			"id": "controls_view",
+			"default": false,
+			"label": "Controls view"
+		},
+		{
+			"type": "checkbox",
+			"id": "title_view",
+			"default": false,
+			"label": "Title view"
+		},
+		{
+			"type": "image_picker",
+			"id": "image_background",
+			"label": "Image"
+		}
+	],
+	"presets": [
+		{
+			"name": "Video section",
+			"category": "Sections"
+		}
+	]
+}
+{% endschema %}

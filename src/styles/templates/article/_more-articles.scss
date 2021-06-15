@@ -1,0 +1,26 @@
+.more-articles {
+	padding-top: 20px;
+	padding-bottom: 20px;
+
+	.more-articles__title {
+		margin-bottom: 40px;
+		text-align: center;
+	}
+
+	.more-articles__articles {
+		display: flex;
+		flex-wrap: wrap;
+		margin-bottom: 50px;
+	}
+
+	.more-articles__article {
+		width: 50%;
+	}
+
+	@include breakpoint(small) {
+		.more-articles__article {
+			width: 100%;
+			margin-bottom: 40px;
+		}
+	}
+}

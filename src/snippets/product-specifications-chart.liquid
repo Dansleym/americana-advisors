@@ -1,0 +1,10 @@
+{%- if product.metafields.specifications != blank -%}
+	{%- for label in product.metafields.specifications.labels -%}
+		{%- assign label = label -%}
+		{%- assign loop_index = forloop.index | minus: 1 -%}
+		{%- assign value = product.metafields.specifications.values[loop_index] -%}
+		{%- assign count = value | plus: 0 -%}
+
+		{%- include 'specification-chart' specification: label, active_count: count -%}
+	{%- endfor -%}
+{%- endif -%}

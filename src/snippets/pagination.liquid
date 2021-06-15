@@ -1,0 +1,50 @@
+<div class="pagination">
+	{%- if paginate.previous.is_link -%}
+		<a href="{{- paginate.previous.url -}}"
+		   class="pagination__element pagination__previous {% if current_page == 1 %}pagination__element--hidden{% endif %}">
+			<span class="pagination__arrow pagination__arrow--left">
+				{%- include 'icon-arrow-right' -%}
+			</span>
+
+			<span class="pagination__previous-text">
+				Previous
+			</span>
+		</a>
+	{%- endif -%}
+	<div class="pagination__links">
+		{%- for part in paginate.parts -%}
+			{%- if part.title == current_page -%}
+				<span class="pagination__element pagination__element--current">
+                   <span class="pagination__element--margin-top">
+					   {{- part.title -}}
+				   </span>
+                </span>
+			{%- else -%}
+				{%- if part.is_link -%}
+					<a href="{{- part.url -}}" class="pagination__element">
+						<span class="pagination__element--margin-top">
+							{{- part.title -}}
+						</span>
+					</a>
+				{%- else -%}
+					<div class="pagination__dots">
+						{{- part.title -}}
+					</div>
+				{%- endif -%}
+			{%- endif -%}
+		{%- endfor -%}
+	</div>
+	{%- if paginate.next.is_link -%}
+		<a href="{{- paginate.next.url -}}"
+		   class="pagination__element pagination__next {% if current_page == paginate.pages %}pagination__element--hidden{% endif %}"
+		>
+			<span class="pagination__next-text">
+				Next
+			</span>
+
+			<span class="pagination__arrow">
+				{%- include 'icon-arrow-right' -%}
+			</span>
+		</a>
+	{%- endif -%}
+</div>

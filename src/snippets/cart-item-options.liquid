@@ -1,0 +1,33 @@
+{%- unless item.product.has_only_default_variant -%}
+	<ul class="cart-item-options">
+		{%- for option in item.options_with_values -%}
+			<li class="cart-item-options__option">
+				<span class="cart-item-options__option-name">
+					{{- option.name | append: ': ' -}}
+				</span>
+
+				<span>
+					{{- option.value -}}
+				</span>
+			</li>
+		{%- endfor -%}
+
+		{%- unless item.properties == empty -%}
+			{%- for property in item.properties -%}
+				{%- assign first_character_in_key = property.first | truncate: 1, '' -%}
+
+				{%- unless property.last == blank or first_character_in_key == '_' -%}
+					<li class="cart-item-options__option">
+						<span class="cart-item-options__option-name">
+							{{- property.name | append: ': ' -}} :
+						</span>
+
+						<span>
+							{{- property.value -}}
+						</span>
+					</li>
+				{%- endunless -%}
+			{%- endfor -%}
+		{%- endunless -%}
+	</ul>
+{%- endunless -%}

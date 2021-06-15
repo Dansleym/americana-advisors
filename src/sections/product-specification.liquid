@@ -1,0 +1,508 @@
+{%- assign title = section.settings.title -%}
+{%- assign first_container_title = section.settings.first_container_title -%}
+{%- assign second_container_title = section.settings.second_container_title -%}
+{%- assign rim = product.metafields.rim -%}
+{%- assign spoke = product.metafields.spoke -%}
+{%- assign hub = product.metafields.hub -%}
+{%- assign other = product.metafields.other -%}
+
+{%- if title != blank and first_container_title or second_container_title != blank -%}
+	{%- if rim != blank or spoke != blank or hub != blank or other != blank -%}
+		<section id="product-specifications" class="section-container product-specifications">
+			{% if title != blank %}
+				<h2 class="title product-specifications__title">
+					{{- title -}}
+				</h2>
+			{% endif %}
+
+			{%- if first_container_title != blank and rim != blank or spoke != blank or hub != blank or other != blank -%}
+				<div class="js-pdp-accordion pdp-accordion accordion--open">
+					<div class="js-pdp-accordion-container accordion-container">
+						<h4 class="js-pdp-accordion-toggler accordion-container__title">
+							{{- first_container_title -}}
+							<div id="firstTitleArrow" class="accordion-container__title-arrow">
+								{%- include 'icon-accordion-arrow' -%}
+							</div>
+						</h4>
+						<div class="js-pdp-accordion-content accordion-content-wrapper" style="display: block">
+							<div class="accordion-content">
+								{%- if rim.rim_type != blank or rim.rim_material != blank or rim.braking_surface != blank or rim.brake_track_height != blank or rim.rim_depth != blank or rim.rim_width != blank -%}
+									<div class="accordion-container-item">
+										<h5 class="accordion-container-item__title">
+											{{- 'products.specifications.rim.title' | t -}}
+										</h5>
+
+										{%- if rim.rim_type != blank -%}
+											<div class="accordion-container-item__field">
+												<h6 class="accordion-container-item__field-title">
+													{{- 'products.specifications.rim.rim_type' | t -}}
+												</h6>
+
+												<div class="accordion-container-item__field-value">
+													{{- rim.rim_type -}}
+												</div>
+											</div>
+										{%- endif -%}
+
+										{%- if rim.rim_material != blank -%}
+											<div class="accordion-container-item__field">
+												<h6 class="accordion-container-item__field-title">
+													{{- 'products.specifications.rim.rim_material' | t -}}
+												</h6>
+
+												<div class="accordion-container-item__field-value">
+													{{ rim.rim_material }}
+												</div>
+											</div>
+										{%- endif -%}
+
+										{%- if rim.braking_surface != blank -%}
+											<div class="accordion-container-item__field">
+												<h6 class="accordion-container-item__field-title">
+													{{- 'products.specifications.rim.braking_surface' | t -}}
+												</h6>
+
+												<div class="accordion-container-item__field-value">
+													{{ rim.braking_surface }}
+												</div>
+											</div>
+										{%- endif -%}
+
+										{%- if rim.brake_track_height != blank -%}
+											<div class="accordion-container-item__field">
+												<h6 class="accordion-container-item__field-title">
+													{{- 'products.specifications.rim.brake_track_height' | t -}}
+												</h6>
+
+												<div class="accordion-container-item__field-value">
+													{{- rim.brake_track_height -}}
+												</div>
+											</div>
+										{%- endif -%}
+
+										{%- if rim.rim_depth != blank -%}
+											<div class="accordion-container-item__field">
+												<h6 class="accordion-container-item__field-title">
+													{{- 'products.specifications.rim.rim_depth' | t -}}
+												</h6>
+
+												<div class="accordion-container-item__field-value">
+													{{- rim.rim_depth -}}
+												</div>
+											</div>
+										{%- endif -%}
+
+										{%- if rim.rim_width != blank -%}
+											<div class="accordion-container-item__field">
+												<h6 class="accordion-container-item__field-title">
+													{{- 'products.specifications.rim.rim_width' | t -}}
+												</h6>
+
+												<div class="accordion-container-item__field-value">
+													{{- rim.rim_width -}}
+												</div>
+											</div>
+										{%- endif -%}
+									</div>
+								{%- endif -%}
+
+								{%- if spoke.front_spoke_pattern != blank or spoke.rear_spoke_pattern != blank or spoke.spoke_count != blank or spoke.spoke_type != blank or spoke.nipple_type != blank -%}
+									<div class="accordion-container-item">
+										<h5 class="accordion-container-item__title">
+											{{- 'products.specifications.spoke.title' | t -}}
+										</h5>
+
+										{%- if spoke.front_spoke_pattern != blank -%}
+											<div class="accordion-container-item__field">
+												<h6 class="accordion-container-item__field-title">
+													{{- 'products.specifications.spoke.front_spoke_pattern' | t -}}
+												</h6>
+
+												<div class="accordion-container-item__field-value">
+													{{- spoke.front_spoke_pattern -}}
+												</div>
+											</div>
+										{%- endif -%}
+
+										{%- if spoke.rear_spoke_pattern != blank -%}
+											<div class="accordion-container-item__field">
+												<h6 class="accordion-container-item__field-title">
+													{{- 'products.specifications.spoke.rear_spoke_pattern' | t -}}
+												</h6>
+
+												<div class="accordion-container-item__field-value">
+													{{- spoke.rear_spoke_pattern -}}
+												</div>
+											</div>
+										{%- endif -%}
+
+										{%- if spoke.spoke_count != blank -%}
+											<div class="accordion-container-item__field">
+												<h6 class="accordion-container-item__field-title">
+													{{- 'products.specifications.spoke.spoke_count' | t -}}
+												</h6>
+
+												<div class="accordion-container-item__field-value">
+													{{- spoke.spoke_count -}}
+												</div>
+											</div>
+										{%- endif -%}
+
+										{%- if spoke.spoke_type != blank -%}
+											<div class="accordion-container-item__field">
+												<h6 class="accordion-container-item__field-title">
+													{{- 'products.specifications.spoke.spoke_type' | t -}}
+												</h6>
+
+												<div class="accordion-container-item__field-value">
+													{{- spoke.spoke_type -}}
+												</div>
+											</div>
+										{%- endif -%}
+
+										{%- if spoke.nipple_type != blank -%}
+											<div class="accordion-container-item__field">
+												<h6 class="accordion-container-item__field-title">
+													{{- 'products.specifications.spoke.nipple_type' | t -}}
+												</h6>
+
+												<div class="accordion-container-item__field-value">
+													{{- spoke.nipple_type -}}
+												</div>
+											</div>
+										{%- endif -%}
+									</div>
+								{%- endif -%}
+
+								{%- if hub.front_hub != blank or hub.rear_hub != blank -%}
+									<div class="accordion-container-item">
+										<h5 class="accordion-container-item__title">
+											{{- 'products.specifications.hub.title' | t -}}
+										</h5>
+
+										{%- if hub.front_hub != blank -%}
+											<div class="accordion-container-item__field">
+												<h6 class="accordion-container-item__field-title">
+													{{- 'products.specifications.hub.front_hub' | t -}}
+												</h6>
+
+												<div class="accordion-container-item__field-value">
+													{{- hub.front_hub -}}
+												</div>
+											</div>
+										{%- endif -%}
+
+										{%- if hub.rear_hub != blank -%}
+											<div class="accordion-container-item__field">
+												<h6 class="accordion-container-item__field-title">
+													{{- 'products.specifications.hub.rear_hub' | t -}}
+												</h6>
+
+												<div class="accordion-container-item__field-value">
+													{{- hub.rear_hub -}}
+												</div>
+											</div>
+										{%- endif -%}
+									</div>
+								{%- endif -%}
+
+								{%- if hub.front_hub != blank or hub.rear_hub != blank -%}
+									<div class="accordion-container-item">
+										<h5 class="accordion-container-item__title">
+											{{- 'products.specifications.other.title' | t -}}
+										</h5>
+
+										{%- if other.weight != blank -%}
+											<div class="accordion-container-item__field">
+												<h6 class="accordion-container-item__field-title">
+													{{- 'products.specifications.other.weight' | t -}}
+												</h6>
+
+												<div class="accordion-container-item__field-value">
+													{{- other.weight -}}
+												</div>
+											</div>
+										{%- endif -%}
+
+										{%- if other.extras != blank -%}
+											<div class="accordion-container-item__field">
+												<h6 class="accordion-container-item__field-title">
+													{{- 'products.specifications.other.extras' | t -}}
+												</h6>
+
+												<div class="accordion-container-item__field-value">
+													{{ other.extras }}
+												</div>
+											</div>
+										{%- endif -%}
+									</div>
+								{%- endif -%}
+							</div>
+						</div>
+					</div>
+				</div>
+			{%- endif -%}
+
+			{%- if second_container_title != blank and rim != blank or spoke != blank or hub != blank or other != blank -%}
+				<div class="js-pdp-accordion pdp-accordion">
+					<div class="js-pdp-accordion-container accordion-container">
+						<h4 class="js-pdp-accordion-toggler accordion-container__title">
+							{{- second_container_title -}}
+							<div id="secondTitleArrow" class="accordion-container__title-arrow">
+								{%- include 'icon-accordion-arrow' -%}
+							</div>
+						</h4>
+						<div class="js-pdp-accordion-content accordion-content-wrapper" style="display: none">
+							<div class="accordion-content">
+								{%- if rim.rim_type != blank or rim.rim_material != blank or rim.braking_surface != blank or rim.brake_track_height != blank or rim.rim_depth != blank or rim.rim_width != blank -%}
+									<div class="accordion-container-item">
+										<h5 class="accordion-container-item__title">
+											{{- 'products.specifications.rim.title' | t -}}
+										</h5>
+
+										{%- if rim.rim_type != blank -%}
+											<div class="accordion-container-item__field">
+												<h6 class="accordion-container-item__field-title">
+													{{- 'products.specifications.rim.rim_type' | t -}}
+												</h6>
+
+												<div class="accordion-container-item__field-value">
+													{{- rim.rim_type -}}
+												</div>
+											</div>
+										{%- endif -%}
+
+										{%- if rim.rim_material != blank -%}
+											<div class="accordion-container-item__field">
+												<h6 class="accordion-container-item__field-title">
+													{{- 'products.specifications.rim.rim_material' | t -}}
+												</h6>
+
+												<div class="accordion-container-item__field-value">
+													{{ rim.rim_material }}
+												</div>
+											</div>
+										{%- endif -%}
+
+										{%- if rim.braking_surface != blank -%}
+											<div class="accordion-container-item__field">
+												<h6 class="accordion-container-item__field-title">
+													{{- 'products.specifications.rim.braking_surface' | t -}}
+												</h6>
+
+												<div class="accordion-container-item__field-value">
+													{{ rim.braking_surface }}
+												</div>
+											</div>
+										{%- endif -%}
+
+										{%- if rim.brake_track_height != blank -%}
+											<div class="accordion-container-item__field">
+												<h6 class="accordion-container-item__field-title">
+													{{- 'products.specifications.rim.brake_track_height' | t -}}
+												</h6>
+
+												<div class="accordion-container-item__field-value">
+													{{- rim.brake_track_height -}}
+												</div>
+											</div>
+										{%- endif -%}
+
+										{%- if rim.rim_depth != blank -%}
+											<div class="accordion-container-item__field">
+												<h6 class="accordion-container-item__field-title">
+													{{- 'products.specifications.rim.rim_depth' | t -}}
+												</h6>
+
+												<div class="accordion-container-item__field-value">
+													{{- rim.rim_depth -}}
+												</div>
+											</div>
+										{%- endif -%}
+
+										{%- if rim.rim_width != blank -%}
+											<div class="accordion-container-item__field">
+												<h6 class="accordion-container-item__field-title">
+													{{- 'products.specifications.rim.rim_width' | t -}}
+												</h6>
+
+												<div class="accordion-container-item__field-value">
+													{{- rim.rim_width -}}
+												</div>
+											</div>
+										{%- endif -%}
+									</div>
+								{%- endif -%}
+
+								{%- if spoke.front_spoke_pattern != blank or spoke.rear_spoke_pattern != blank or spoke.spoke_count != blank or spoke.spoke_type != blank or spoke.nipple_type != blank -%}
+									<div class="accordion-container-item">
+										<h5 class="accordion-container-item__title">
+											{{- 'products.specifications.spoke.title' | t -}}
+										</h5>
+
+										{%- if spoke.front_spoke_pattern != blank -%}
+											<div class="accordion-container-item__field">
+												<h6 class="accordion-container-item__field-title">
+													{{- 'products.specifications.spoke.front_spoke_pattern' | t -}}
+												</h6>
+
+												<div class="accordion-container-item__field-value">
+													{{- spoke.front_spoke_pattern -}}
+												</div>
+											</div>
+										{%- endif -%}
+
+										{%- if spoke.rear_spoke_pattern != blank -%}
+											<div class="accordion-container-item__field">
+												<h6 class="accordion-container-item__field-title">
+													{{- 'products.specifications.spoke.rear_spoke_pattern' | t -}}
+												</h6>
+
+												<div class="accordion-container-item__field-value">
+													{{- spoke.rear_spoke_pattern -}}
+												</div>
+											</div>
+										{%- endif -%}
+
+										{%- if spoke.spoke_count != blank -%}
+											<div class="accordion-container-item__field">
+												<h6 class="accordion-container-item__field-title">
+													{{- 'products.specifications.spoke.spoke_count' | t -}}
+												</h6>
+
+												<div class="accordion-container-item__field-value">
+													{{- spoke.spoke_count -}}
+												</div>
+											</div>
+										{%- endif -%}
+
+										{%- if spoke.spoke_type != blank -%}
+											<div class="accordion-container-item__field">
+												<h6 class="accordion-container-item__field-title">
+													{{- 'products.specifications.spoke.spoke_type' | t -}}
+												</h6>
+
+												<div class="accordion-container-item__field-value">
+													{{- spoke.spoke_type -}}
+												</div>
+											</div>
+										{%- endif -%}
+
+										{%- if spoke.nipple_type != blank -%}
+											<div class="accordion-container-item__field">
+												<h6 class="accordion-container-item__field-title">
+													{{- 'products.specifications.spoke.nipple_type' | t -}}
+												</h6>
+
+												<div class="accordion-container-item__field-value">
+													{{- spoke.nipple_type -}}
+												</div>
+											</div>
+										{%- endif -%}
+									</div>
+								{%- endif -%}
+
+								{%- if hub.front_hub != blank or hub.rear_hub != blank -%}
+									<div class="accordion-container-item">
+										<h5 class="accordion-container-item__title">
+											{{- 'products.specifications.hub.title' | t -}}
+										</h5>
+
+										{%- if hub.front_hub != blank -%}
+											<div class="accordion-container-item__field">
+												<h6 class="accordion-container-item__field-title">
+													{{- 'products.specifications.hub.front_hub' | t -}}
+												</h6>
+
+												<div class="accordion-container-item__field-value">
+													{{- hub.front_hub -}}
+												</div>
+											</div>
+										{%- endif -%}
+
+										{%- if hub.rear_hub != blank -%}
+											<div class="accordion-container-item__field">
+												<h6 class="accordion-container-item__field-title">
+													{{- 'products.specifications.hub.rear_hub' | t -}}
+												</h6>
+
+												<div class="accordion-container-item__field-value">
+													{{- hub.rear_hub -}}
+												</div>
+											</div>
+										{%- endif -%}
+									</div>
+								{%- endif -%}
+
+								{%- if hub.front_hub != blank or hub.rear_hub != blank -%}
+									<div class="accordion-container-item">
+										<h5 class="accordion-container-item__title">
+											{{- 'products.specifications.other.title' | t -}}
+										</h5>
+
+										{%- if other.weight != blank -%}
+											<div class="accordion-container-item__field">
+												<h6 class="accordion-container-item__field-title">
+													{{- 'products.specifications.other.weight' | t -}}
+												</h6>
+
+												<div class="accordion-container-item__field-value">
+													{{- other.weight -}}
+												</div>
+											</div>
+										{%- endif -%}
+
+										{%- if other.extras != blank -%}
+											<div class="accordion-container-item__field">
+												<h6 class="accordion-container-item__field-title">
+													{{- 'products.specifications.other.extras' | t -}}
+												</h6>
+
+												<div class="accordion-container-item__field-value">
+													{{ other.extras }}
+												</div>
+											</div>
+										{%- endif -%}
+									</div>
+								{%- endif -%}
+							</div>
+						</div>
+					</div>
+				</div>
+			{%- endif -%}
+		</section>
+	{%- endif -%}
+{%- endif -%}
+
+
+{% schema %}
+{
+	"name": "Accordion",
+	"settings": [
+		{
+			"type": "text",
+			"id": "title",
+			"label": "Title of the sections",
+			"default": "PRODUCT SPECIFICATIONS"
+		},
+		{
+			"type": "text",
+			"id": "first_container_title",
+			"label": "Title of container",
+			"default": "Tech Specs"
+		},
+		{
+			"type": "text",
+			"id": "second_container_title",
+			"label": "Title of container",
+			"default": "Pressure Recommendations"
+		}
+	],
+	"presets": [
+		{
+			"name": "Product specifications",
+			"category": "Section"
+		}
+	]
+}
+{% endschema %}

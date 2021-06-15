@@ -1,0 +1,124 @@
+{% assign product_configuration = product.metafields.configuration %}
+{% assign option_title = product.metafields.configuration.option_title %}
+{% assign option_value = product.metafields.configuration.option_value %}
+{% assign option_description = product.metafields.configuration.option_description %}
+
+<div class="configurator js-configurator">
+	<div class="configurator__close-button js-configurator-close">
+		{% include 'icon-close' %}
+	</div>
+
+	{% form 'product', product, class: 'configurator__form' %}
+		<div class="configurator__header">
+			<div class="configurator__featured-image--wrapper">
+				{% if featured_image %}
+					<img class="configurator__featured-image" src="{{ featured_image.src | img_url: '104x104' }}" data-product-featured-image
+						 alt="{{featured_image.alt | escape }}">
+				{% else %}
+					<img class="configurator__empty-image" src="{{ 'logo.png' | asset_url }}" alt="{{featured_image.alt | escape }}">
+				{% endif %}
+			</div>
+
+			<div class="configurator__product-details">
+				<span class="configurator__code" data-product-sku>{{ current_variant_sku }}</span>
+				<h3 class="configurator__title">{{ product.title }}</h3>
+			</div>
+		</div>
+
+		<div class="configurator__main" data-simplebar data-simplebar-auto-hide="false">
+			<input type="hidden" id="Quantity" name="quantity" value="1" min="1">
+
+			<select name="id" class="no-js product__select" data-product-select>
+				{% for variant in product.variants %}
+					<option
+							{% unless variant.available %}disabled="disabled"{% endunless %} value="{{ variant.id }}">
+						{{ variant.title }}
+					</option>
+				{% endfor %}
+			</select>
+
+			{% unless product.has_only_default_variant and product_configuration %}
+				{% for option in product.options_with_values %}
+					<div class="configurator__option">
+						<h6 class="configurator__option-title">{{ option.name | upcase }}</h6>
+
+						{% for variant in option.values %}
+							<div class="configurator__variant">
+								<input class="configurator__variant-input" type="radio"
+									   id="SingleOptionSelector-{{- option.position -}}-{{- forloop.index -}}"
+									   name="SingleOptionSelector-{{- option.position -}}"
+									   data-index="option{{- option.position -}}"
+									   data-single-option-selector
+									   {% if option.selected_value == variant %}checked="checked"{% endif %}
+									   value="{{- variant | escape -}}">
+								<label class="configurator__variant-label" for="SingleOptionSelector-{{- option.position -}}-{{- forloop.index -}}">{{ variant }}</label>
+							</div>
+						{% endfor %}
+					</div>
+				{% endfor %}
+
+				{% for field in product_configuration %}
+					{% assign index = forloop.index | minus: 1 %}
+
+					<div class="configurator__option">
+						<div class="configurator__description">
+							<h6 class="configurator__option-title">{{ option_title[index] }}</h6>
+
+							<div class="configurator__tooltip">
+								{% include 'icon-questionmark' %}
+
+								<div class="configurator__tooltip-text">{{ option_description[index] }}</div>
+							</div>
+						</div>
+
+						<div class="configurator__variant">
+							<input id="variant-{{- option_value[index] -}}" type="radio" value="{{- option_value[index] -}}" name="properties[{{- option_title[index] -}}]">
+							<label class="configurator__variant-label configurator__variant-label--text" for="variant-{{- option_value[index] -}}">{{- option_value[index] -}}</label>
+						</div>
+					</div>
+				{% endfor %}
+
+				{% else %}
+					<img class="configurator__empty-image" src="{{ 'logo.png' | asset_url }}" alt="{{featured_image.alt | escape }}">
+			{% endunless %}
+		</div>
+
+		<div class="configurator__footer">
+			<div class="configurator__offer">
+				<div class="product__price-wrapper product__price-wrapper--configurator" data-price-wrapper>
+					<span class="product__price-title">{{ price_title }}</span>
+
+					<span data-product-price class="product__price">
+						{{ current_variant.price | money | remove: '.00' }}
+					</span>
+
+					{% if product.compare_at_price_max > product.price %}
+						<span class="visually-hidden" data-compare-text>{{ 'products.product.regular_price' | t }}</span>
+
+						<s data-compare-price class="product__price">
+							{% if current_variant.compare_at_price > current_variant.price %}
+								{{ current_variant.compare_at_price | money | remove: '.00' }}
+							{% endif %}
+						</s>
+					{% endif %}
+				</div>
+
+				<button class="button button-cta configurator__button js-buy-button" type="submit" name="add" data-add-to-cart
+					{% unless current_variant.available %}disabled="disabled"{% endunless %}>
+
+					<span data-add-to-cart-text>
+						{% if current_variant.available %}
+							{{ 'products.product.add_to_cart' | t }}
+						{% else %}
+							{{ 'products.product.sold_out' | t }}
+						{% endif %}
+					</span>
+
+					<div class="icon-container">
+						{% include 'icon-white-arrow' %}
+					</div>
+				</button>
+			</div>
+		</div>
+	{% endform %}
+</div>

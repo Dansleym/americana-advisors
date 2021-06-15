@@ -1,0 +1,76 @@
+{%- assign image = section.settings.image -%}
+{%- assign title = section.settings.title -%}
+{%- assign subtitle = section.settings.subtitle -%}
+{%- assign number = '4' -%}
+
+<section class="page-not-found">
+	<div class="page-not-found__wrapper">
+		<h1 class="h3 page-not-found__title">
+			{%- if title != blank -%}
+				{{- title -}}
+			{% else %}
+				{{- 'general.404.title' | t -}}
+			{%- endif -%}
+		</h1>
+
+		<div class="page-not-found__logo">
+			<span class="page-not-found__number page-not-found__number--left">
+				{{- number -}}
+			</span>
+
+			<div class="page-not-found__image-wrapper">
+				{%- if image != blank -%}
+					<picture>
+						<source srcset="{{ image | img_url: '150x150' }} 1x, {{ image | img_url: '300x300' }} 2x" media="(max-width: 767px)">
+						<source srcset="{{ image | img_url: '300x300' }} 1x, {{ image | img_url: '600x600' }} 2x" media="(min-width: 768px)">
+
+						<img class="page-not-found__image"
+							 src="{{ image | img_url: '600x600' }}"
+							 alt="{{ image.alt }}"
+						/>
+					</picture>
+				{%- else -%}
+					<img class="page-not-found__image"
+						 src="{{ 'wheel-404.jpg' | asset_url }}"
+						 alt="404 image"
+					/>
+				{%- endif -%}
+			</div>
+
+			<span class="page-not-found__number page-not-found__number--right">
+				{{- number -}}
+			</span>
+		</div>
+
+		<div class="page-not-found__subtitle">
+			{%- if subtitle != blank -%}
+				{{- subtitle -}}
+			{%- else -%}
+				{{- 'general.404.subtext_html' | t -}}
+			{%- endif -%}
+		</div>
+	</div>
+</section>
+
+{% schema %}
+{
+	"name": "Page not found",
+	"settings": [
+		{
+			"type": "image_picker",
+			"id": "image",
+			"label": "Image"
+		},
+		{
+			"type": "text",
+			"id": "title",
+			"label": "Heading"
+		},
+		{
+			"type": "richtext",
+			"id": "subtitle",
+			"label": "Subheading"
+		}
+	]
+}
+{% endschema %}

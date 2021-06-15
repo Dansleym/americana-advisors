@@ -1,0 +1,125 @@
+{%- layout none -%}
+
+<form class="mini-cart__form js-cart-form"
+	  action="{{- routes.cart_url -}}"
+	  method="post"
+	  novalidate
+>
+	<div class="mini-cart__header-wrapper">
+		<div class="mini-cart__header">
+			<h3 class="mini-cart__title">
+				{{- 'cart.general.title' | t -}}
+			</h3>
+
+			<div class="mini-cart__close-button js-mini-cart-close">
+				<div class="icon-container mini-cart__close-icon">
+					{%- include 'icon-close' -%}
+				</div>
+			</div>
+		</div>
+
+		<hr class="mini-cart__dividing-strip mini-cart__dividing-strip--head"/>
+	</div>
+
+	{%- if cart.item_count > 0 -%}
+		<div class="mini-cart__items-wrapper"
+			 data-simplebar-auto-hide="false"
+			 data-simplebar
+		>
+			{%- for item in cart.items -%}
+				{%- assign price = item.price | money -%}
+				{%- assign variant = item.variant_id -%}
+				{%- assign quantity = item.quantity -%}
+				{%- assign image = item.image -%}
+
+				<div class="mini-cart__item-wrapper js-variant-{{- variant -}}">
+					<div class="cart-item"
+						 id="variant-{{- variant -}}"
+					>
+						{%- if image != blank -%}
+							<a class="cart-item__image-link"
+							   href="{{- item.url -}}"
+							>
+								<img class="cart-item__image"
+									 src="{{- image | img_url: '100x100' -}}"
+									 alt="{{- item.title -}}"
+								/>
+							</a>
+						{%- endif -%}
+
+						<div class="cart-item__information">
+							<a href="{{- item.url -}}">
+								<h6 class="cart-item__title">
+									{{- item.product.title -}}
+								</h6>
+							</a>
+
+							{%- include 'cart-item-options' -%}
+
+							<button class="button-read-more cart-item__action-link js-remove-line-item"
+									data-cart-remove-variant="{{- variant -}}"
+									type="button"
+							>
+								{{- 'cart.general.remove' | t -}}
+							</button>
+
+							{%- include 'cart-item-quantity' -%}
+
+							{%- include 'cart-item-price' -%}
+						</div>
+					</div>
+				</div>
+			{%- endfor -%}
+		</div>
+
+		<div class="mini-cart__order-summary">
+			<div class="mini-cart__price">
+				<div class="mini-cart__subtotal">
+					<span class="mini-cart__subtotal-title">
+						{{- 'cart.label.total' | t -}}
+					</span>
+
+					<span class="mini-cart__subtotal-price">
+						{{- cart.total_price | money -}}
+					</span>
+				</div>
+
+				{%- if cart.total_discounts > 0 -%}
+					<p class="mini-cart__discounts">
+						{{ 'cart.general.savings' | t }} {{ cart.total_discounts | money }}
+					</p>
+				{%- endif -%}
+			</div>
+
+			<hr class="mini-cart__dividing-strip"/>
+
+			<div class="mini-cart__action-buttons">
+				<button class="button button-cta mini-cart__button mini-cart__button--checkout js-checkout"
+						type="submit"
+						name="checkout"
+				>
+					{{- 'cart.general.checkout' | t -}}
+
+					<div class="icon-container--arrow">
+						{% include 'icon-white-arrow' %}
+					</div>
+				</button>
+
+				<a class="button button-cta mini-cart__button mini-cart__button--cart"
+				   href="{{- routes.cart_url -}}"
+				>
+					{{- 'cart.label.cart' | t -}}
+
+					<div class="icon-container--arrow">
+						{% include 'icon-white-arrow' %}
+					</div>
+				</a>
+			</div>
+		</div>
+
+	{%- else -%}
+		<div class="mini-cart__empty">
+			{%- include 'cart-empty' -%}
+		</div>
+	{%- endif -%}
+</form>

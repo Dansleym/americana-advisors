@@ -1,0 +1,45 @@
+.blog {
+	padding-top: 40px;
+	padding-bottom: 30px;
+
+	.blog__title {
+		margin-bottom: 60px;
+		text-align: center;
+	}
+
+	.blog__article-wrapper {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-ms-flex-wrap: wrap;
+		flex-wrap: wrap;
+	}
+
+	.blog__article-item {
+		width: 50%;
+		margin-bottom: 40px;
+	}
+
+	@include breakpoint(small) {
+		.blog__article-item {
+			width: 100%;
+			margin-bottom: 40px;
+		}
+	}
+
+	@include breakpoint(small-tablet-portrait) {
+		.blog__title {
+			margin-bottom: 30px;
+			font-size: 40px;
+			line-height: 1;
+		}
+
+		.blog__article-item {
+			margin-bottom: 30px;
+		}
+
+		.blog__article-title {
+			font-size: 28px;
+		}
+	}
+}

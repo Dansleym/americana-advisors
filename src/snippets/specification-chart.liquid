@@ -1,0 +1,20 @@
+{%- if theme != blank and specification != blank and active_count != blank -%}
+	<div class="specification-chart specification-chart--{{- theme -}}">
+		<p class="specification-chart__title">{{- specification -}}</p>
+		<div class="specification-chart__level-box">
+			{%- for counter in (1..6) -%}
+				{%- if active_count >= counter -%}
+					{%- capture class_list -%}
+						specification-chart__level-box-item specification-chart__level-box-item--active
+					{%- endcapture -%}
+				{%- else -%}
+					{%- capture class_list -%}
+						specification-chart__level-box-item
+					{%- endcapture -%}
+				{%- endif -%}
+
+				<div class="{{- class_list -}}"></div>
+			{%- endfor -%}
+		</div>
+	</div>
+{%- endif -%}

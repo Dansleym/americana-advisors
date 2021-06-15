@@ -1,0 +1,233 @@
+{% assign price_title = section.settings.price_title %}
+{% assign buy_now_button = section.settings.buy_now_button %}
+{% assign payment_conditions = section.settings.payment_conditions %}
+{% assign payment_company_logo = section.settings.payment_company_logo %}
+{% assign payment_company_link = section.settings.payment_company_link %}
+{% assign learn_more_button = section.settings.learn_more_button %}
+{% assign current_variant_sku = product.selected_or_first_available_variant.sku %}
+
+<div class="product" data-section-id="{{ section.id }}" data-section-type="product" data-enable-history-state="true"
+	 itemscope itemtype="http://schema.org/Product">
+
+	{%- assign current_variant = product.selected_or_first_available_variant -%}
+	{%- assign featured_image = current_variant.featured_image | default: product.featured_image -%}
+
+	<meta itemprop="name" content="{{ product.title }}{% unless product.has_only_default_variant %} - {{ current_variant.title }}{% endunless %}">
+	<meta itemprop="url" content="{{ shop.url }}{{ current_variant.url }}">
+	<meta itemprop="brand" content="{{ product.vendor }}">
+	<meta itemprop="image" content="{{ featured_image | img_url: '557x557' }}">
+	<meta itemprop="description" content="{{ product.description | strip_html | escape }}">
+
+	{% include 'configurator' %}
+
+	<div class="product__container">
+		{% include 'breadcrumbs' %}
+
+		<div class="product__text product__text--mobile">
+			<h2 class="h1">{{ product.title }}</h2>
+			<p class="product__description">{{ product.description }}</p>
+		</div>
+
+		<div class="product__row">
+			<div class="product__main-slider">
+				<div class="product__vertical-slider">
+					<div class="swiper-container swiper-container--vertical-slider-container js-product-vertical-slider">
+						<div class="swiper-wrapper">
+							{% for image in product.images %}
+								{% unless image.attached_to_variant? %}
+									<div class="swiper-slide product__vertical-slide">
+										<img class="product__vertical-slide-image" src="{{ image.src | img_url: '300x300' }}" alt="{{ image.alt | escape }}">
+									</div>
+								{% endunless %}
+							{% endfor %}
+
+							{% for media in product.media %}
+								{% case media.media_type %}
+
+								{% when 'external_video' %}
+									<div class="swiper-slide product__vertical-slide">
+										<img class="product__vertical-slide-preview" src="{{ media | img_url: '300x300' }}" alt="{{ media.alt | escape }}">
+
+										{% include 'icon-play-button' %}
+									</div>
+								{% when 'video' %}
+									<div class="swiper-slide product__vertical-slide">
+										<img class="product__vertical-slide-preview" src="{{ media | img_url: '300x300' }}" alt="{{ media.alt | escape }}">
+
+										{% include 'icon-play-button' %}
+									</div>
+								{% endcase %}
+							{% endfor %}
+
+							{% if product.media == blank and product.images == blank %}
+								<div class="swiper-slide product__vertical-slide product__vertical-slide--empty-image-wrapper">
+									<img src="{{ 'logo.png' | asset_url }}" alt="{{ article.title }}">
+								</div>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+
+				<div class="product__horizontal-slider">
+					<div class="swiper-container swiper-container--horizontal-slider-container js-product-horizontal-slider">
+						<div class="swiper-wrapper">
+							{% for image in product.images %}
+								{% unless image.attached_to_variant? %}
+									<div class="swiper-slide product__horizontal-slide js-horizontal-slide">
+										<div class="product__image-aspect-ratio">
+											<picture>
+												<source srcset="{{ image.src | img_url: '350x350' }} 1x, {{ image.src | img_url: '700x700' }} 2x" media="(max-width: 991px)">
+												<source srcset="{{ image.src | img_url: '557x557' }} 1x, {{ image.src | img_url: '1114x1114' }} 2x" media="(min-width: 992px)">
+												<img class="product__image-slide" src="{{ image.src | img_url: '557x557' }}" alt="{{ image.alt | escape }}">
+											</picture>
+										</div>
+									</div>
+								 {% endunless %}
+							{% endfor %}
+
+							{% for media in product.media %}
+								{% case media.media_type %}
+
+								{% when 'external_video' %}
+									<div class="swiper-slide product__horizontal-slide js-horizontal-slide">
+										<div class="product__video-slide-wrapper">
+											<div class="product__video-aspect-ratio">
+												{{ media | external_video_tag }}
+
+												<div class="product__video-slide-preview js-video-preview"></div>
+											</div>
+										</div>
+									</div>
+								{% when 'video' %}
+									<div class="swiper-slide product__horizontal-slide js-horizontal-slide">
+										<div class="product__video-slide-wrapper">
+											<div class="product__video-aspect-ratio">
+												{{ media | video_tag: controls: true }}
+
+												<div class="product__video-slide-preview js-video-preview"></div>
+											</div>
+										</div>
+									</div>
+								{% endcase %}
+							{% endfor %}
+
+							{% if product.media == blank %}
+								<div class="swiper-slide product__horizontal-slide js-horizontal-slide">
+									<div class="product__image-aspect-ratio product__empty-image-wrapper">
+										<img class="product__empty-image" src="{{ 'logo.png' | asset_url }}" alt="{{ article.title }}">
+									</div>
+								</div>
+							{% endif %}
+						</div>
+					</div>
+
+					{% if product.media.size > 1 %}
+						<div class="swiper-pagination js-product-pagination"></div>
+
+						<div class="swiper-button-prev product__slider-button js-product-slider-button js-product-prev-button"></div>
+						<div class="swiper-button-next product__slider-button js-product-slider-button js-product-next-button"></div>
+					{% endif %}
+				</div>
+			</div>
+
+			<div class="product__details-wrapper">
+				<div class="product__details">
+					<div class="product__text">
+						<h2 class="h1">{{ product.title }}</h2>
+
+						<p class="product__description">{{ product.description }}</p>
+					</div>
+
+					{% if buy_now_button != blank %}
+						<div class="product__offer" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+							<meta itemprop="priceCurrency" content="{{ shop.currency }}">
+							<meta itemprop="price" content="{{ current_variant.price | remove: '.00' }}">
+							<link itemprop="availability" href="http://schema.org/{% if current_variant.available %}InStock{% else %}OutOfStock{% endif %}">
+
+							<div class="product__price-wrapper">
+								<span class="product__price-title">{{ price_title }}</span>
+
+								<span class="product__price">
+								  	{{ product.price | money | remove: '.00' }}
+								</span>
+							</div>
+
+							<button class="button button-cta product__button js-product-toggle-configurator"
+								{% unless current_variant.available %}disabled="disabled"{% endunless %}>
+								{% if product.available %}
+									{{ buy_now_button }}
+								{% else %}
+									{{ 'products.product.sold_out' | t }}
+								{% endif %}
+							</button>
+						</div>
+
+						<div class="product__payment-plan">
+							{% if payment_conditions != blank %}
+								<p class="product__payment-conditions">{{ payment_conditions }}</p>
+
+								{% if payment_company_logo != blank %}
+									<img class="product__payment-logo" src="{{ payment_company_logo | img_url: image_size }}"
+										 alt="{{ payment_company_logo.alt }} Logo" itemprop="logo">
+								{% endif %}
+
+								{% if payment_company_link != blank and learn_more_button != blank %}
+									<a class="product__learn-more-button" href="{{ payment_company_link }}" target="_blank">{{ learn_more_button }}</a>
+								{% endif %}
+							{% endif %}
+						</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{% unless product == empty %}
+		<script type="application/json" data-product-json>
+		  	{{ product | json }}
+		</script>
+	{% endunless %}
+</div>
+
+{% schema %}
+{
+	"name": "Product",
+	"settings": [
+		{
+			"type": "text",
+			"id": "price_title",
+			"default": "Starting at:",
+			"label": "Price title"
+		},
+		{
+			"type": "text",
+			"id": "buy_now_button",
+			"default": "BUY NOW",
+			"label": "Buy button text"
+		},
+		{
+			"type": "text",
+			"id": "payment_conditions",
+			"default": "Starting at $213/month with",
+			"label": "Payment conditions"
+		},
+		{
+			"type": "image_picker",
+			"id": "payment_company_logo",
+			"label": "Payment company logo"
+		},
+		{
+			"type": "text",
+			"id": "learn_more_button",
+			"default": "Learn more",
+			"label": "Learn more button"
+		},
+		{
+			"type": "text",
+			"id": "payment_company_link",
+			"default": "https://www.affirm.com",
+			"label": "Payment company link"
+		}
+	]
+}
+{% endschema %}

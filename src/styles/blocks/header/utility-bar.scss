@@ -1,0 +1,128 @@
+.utility-bar {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-webkit-box-pack: justify;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+	width: 100%;
+	padding-bottom: 5px;
+	padding-top: 11px;
+	background-color: $black;
+
+	.utility-bar__column {
+		-webkit-box-flex: 1;
+		-ms-flex-positive: 1;
+		flex-grow: 1;
+		width: 100%;
+	}
+
+	.utility-bar__information {
+		min-width: 500px;
+		margin: 0;
+		padding-right: 5px;
+		padding-left: 5px;
+		text-align: center;
+		text-transform: uppercase;
+		font-weight: 500;
+		font-size: 16px;
+		line-height: 1;
+		letter-spacing: 0;
+		word-spacing: 0.5px;
+		font-style: normal;
+		color: $white;
+	}
+
+	.utility-bar__functional-links {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-flex: 1;
+		-ms-flex-positive: 1;
+		flex-grow: 1;
+		-webkit-box-pack: end;
+		-ms-flex-pack: end;
+		justify-content: flex-end;
+		-webkit-box-align: center;
+		-ms-flex-align: center;
+		align-items: center;
+		width: 100%;
+		min-width: 425px;
+		color: $white;
+
+		a {
+			font-size: 16px;
+			line-height: 1;
+			text-align: right;
+			letter-spacing: 0;
+			color: $white;
+		}
+	}
+
+	.utility-bar__functional-item {
+		max-width: 25%;
+		margin-right: 29px;
+	}
+
+	.utility-bar__dealer {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-align: center;
+		-ms-flex-align: center;
+		align-items: center;
+
+		svg {
+			min-width: 14px;
+			height: 14px;
+			margin-right: 2px;
+			margin-bottom: 9px;
+		}
+	}
+
+	.utility-bar__account {
+		font-size: 16px;
+		line-height: 1;
+		text-align: right;
+		letter-spacing: 0;
+		color: $white;
+		cursor: pointer;
+
+		svg {
+			width: 6px;
+			height: 4px;
+		}
+	}
+
+	.utility-bar__language {
+		margin-top: -8px;
+		margin-right: 18px;
+
+		.language-switcher__dropdown {
+			margin-top: 4px;
+		}
+	}
+
+	@include breakpoint(medium) {
+		padding-bottom: 5px;
+		padding-top: 11px;
+		-webkit-box-pack: center;
+		-ms-flex-pack: center;
+		justify-content: center;
+
+		.utility-bar__information {
+			font-size: 14px;
+		}
+
+		.utility-bar__column {
+			display: none;
+		}
+
+		.utility-bar__functional-links {
+			display: none;
+		}
+	}
+}

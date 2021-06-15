@@ -1,0 +1,93 @@
+{%- if section.blocks != blank -%}
+	<section class="shop-now">
+		<h2 class="title shop-now__title">
+			{{- section.settings.shop_title -}}
+		</h2>
+
+		<div class="shop-now__block-wrapper">
+			{%- for block in section.blocks -%}
+				{%- assign image = block.settings.shop_category_image -%}
+
+				<div class="shop-now__submenu-block">
+					<a class="shop-now__block"
+					   href="{{- block.settings.link_url -}}"
+					   itemprop="url"
+					>
+						<div class="shop-now__image-aspect-ratio">
+							{%- if image != blank -%}
+								<picture>
+									<source srcset="{{- image | img_url: '140x' -}} 1x, {{- image | img_url: '280x' -}} 2x" media="(max-width: 768px)">
+									<source srcset="{{- image | img_url: '190x' -}} 1x, {{- image | img_url: '380x' -}} 2x" media="(max-width: 991px)">
+									<source srcset="{{- image | img_url: '270x' -}} 1x, {{- image | img_url: '540x' -}} 2x" media="(min-width: 992px)">
+
+									<img class="shop-now__image"
+										 src="{{- image | img_url: "300x" }}"
+										 alt="{{- image.alt -}}"
+									>
+								</picture>
+							{%- else -%}
+								<img class="shop-now__block-no-image"
+									 src="{{- 'logo.png' | asset_url -}}"
+									 alt="{{- block.settings.link_text -}}"
+								>
+							{%- endif -%}
+						</div>
+						{%- if block.settings.link_text != "" -%}
+							<div class="shop-now__block-link">
+								<div class="shop-now__block-text">
+									{{- block.settings.link_text -}}
+								</div>
+
+								{%- include 'icon-arrow-right' -%}
+							</div>
+						{%- endif -%}
+					</a>
+				</div>
+			{%- endfor -%}
+		</div>
+	</section>
+{% endif %}
+
+{% schema %}
+{
+	"name": "Shop-now",
+	"blocks": [
+		{
+			"type": "category",
+			"name": "Category",
+			"limit": 5,
+			"settings": [
+				{
+					"type": "image_picker",
+					"id": "shop_category_image",
+					"label": "Shop category image"
+				},
+				{
+					"type": "url",
+					"id": "link_url",
+					"label": "Button link"
+				},
+				{
+					"type": "text",
+					"id": "link_text",
+					"label": "Button text"
+				}
+			]
+		}
+	],
+	"settings": [
+		{
+			"type": "text",
+			"id": "shop_title",
+			"label": "Shop now title",
+			"default": "SHOP NOW"
+		}
+	],
+	"presets": [
+		{
+			"name": "Shop now",
+			"category": "Sections"
+		}
+	]
+}
+{% endschema %}

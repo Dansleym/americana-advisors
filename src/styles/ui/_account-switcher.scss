@@ -1,0 +1,75 @@
+.account-switcher {
+	position: relative;
+	max-width: 80px;
+	margin-left: -8px;
+
+	&.is-active .account-switcher__dropdown {
+		display: block;
+		padding-top: 8px;
+	}
+
+	.account-switcher__wrapper {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-align: center;
+		-ms-flex-align: center;
+		align-items: center;
+		cursor: pointer;
+
+		&:focus {
+			opacity: 1;
+		}
+	}
+
+	.account-switcher__current-account {
+		padding: 8px;
+		line-height: 0;
+	}
+
+	.account-switcher__dropdown-icon {
+		width: 6px;
+		height: 3px;
+		padding-bottom: 9px;
+		line-height: 0;
+	}
+
+	.account-switcher__dropdown {
+		position: absolute;
+		left: -15px;
+		right: 0;
+		top: 100%;
+		display: none;
+		z-index: 11;
+		width: 110px;
+		background: $black;
+	}
+
+	.account-switcher__dropdown-item {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-pack: center;
+		-ms-flex-pack: center;
+		justify-content: center;
+		-webkit-box-align: center;
+		-ms-flex-align: center;
+		align-items: center;
+		padding: 10px 5px;
+		cursor: pointer;
+
+		&:hover {
+			background-color: $charcoal;
+		}
+
+		&:hover a {
+			opacity: 1;
+		}
+	}
+
+	.account-switcher__current-account svg,
+	.account-switcher__dropdown-item svg {
+		width: 31px;
+		height: 16px;
+	}
+}

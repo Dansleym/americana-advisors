@@ -1,0 +1,133 @@
+{%- layout none -%}
+
+{%- if cart.item_count > 0 -%}
+	<form class="cart__form js-cart-form"
+		  action="{{- routes.cart_url -}}"
+		  method="post"
+		  novalidate
+	>
+		<div class="cart__bag">
+			<h5 class="cart__bag-title">
+				{{- 'cart.label.bag' | t -}}
+			</h5>
+
+			<div class="cart__grid-subtitles">
+				<p class="cart__bag-subtitle cart__bag-subtitle--product">
+					{{- 'cart.label.product_capitalize' | t -}}
+				</p>
+
+				<p class="cart__bag-subtitle cart__bag-subtitle--quantity">
+					{{- 'cart.label.quantity_capitalize' | t -}}
+				</p>
+
+				<p class="cart__bag-subtitle">
+					{{- 'cart.label.price_capitalize' | t -}}
+				</p>
+			</div>
+
+			{%- for item in cart.items -%}
+				{%- assign price = item.price | money -%}
+				{%- assign variant = item.variant_id -%}
+				{%- assign quantity = item.quantity -%}
+				{%- assign image = item.image -%}
+
+				<div class="cart__item-wrapper js-variant-{{- variant -}}">
+					<div class="cart-item cart-item--cart-page"
+						 id="variant-{{- variant -}}"
+					>
+						<div class="cart__item-main-information">
+							{%- if image != blank -%}
+								<a class="cart-item__image-link"
+								   href="{{- item.url -}}"
+								>
+									<img class="cart-item__image"
+										 src="{{- image | img_url: '100x100' -}}"
+										 alt="{{- item.title -}}"
+									/>
+								</a>
+							{%- endif -%}
+
+							<div class="cart-item__information">
+								<a href="{{- item.url -}}">
+									<h6 class="cart-item__title">
+										{{- item.product.title -}}
+									</h6>
+								</a>
+
+								{%- include 'cart-item-options' -%}
+
+								<button class="button-read-more cart-item__action-link js-remove-line-item"
+										data-cart-remove-variant="{{- variant -}}"
+										type="button"
+								>
+									{{- 'cart.general.remove' | t -}}
+								</button>
+							</div>
+						</div>
+
+						<div class="cart__item-quantity">
+							{%- include 'cart-item-quantity' -%}
+						</div>
+
+						<div class="cart__item-price">
+							{%- include 'cart-item-price' -%}
+						</div>
+					</div>
+				</div>
+			{%- endfor -%}
+		</div>
+
+		<div class="cart__summary">
+			<h5 class="cart__summary-title">
+				{{- 'cart.general.summary_title' | t -}}
+			</h5>
+
+			<div class="cart__summary-additional-items">
+				<div class="cart__summary-item">
+					<span class="cart__summary-label">
+						{{- 'cart.general.summary_total' | t -}}
+					</span>
+
+					<span class="cart__summary-value">
+						{{- cart.original_total_price | money -}}
+					</span>
+				</div>
+
+				<div class="cart__summary-item cart__summary-item--small">
+					<span class="cart__summary-label">
+						{{- 'cart.general.shipping_label' | t -}}
+					</span>
+
+					<span class="cart__summary-value">
+						{{- 'cart.general.shipping_value' | t -}}
+					</span>
+				</div>
+			</div>
+
+			<div class="cart__summary-item cart__summary-item--big">
+				<span class="cart__summary-label">
+					{{- 'cart.general.order_total' | t -}}
+				</span>
+
+				<span class="cart__summary-value">
+					{{- cart.total_price | money -}}
+				</span>
+			</div>
+
+			<button class="button button-cta cart__button js-checkout"
+					type="submit"
+					name="checkout"
+			>
+				{{- 'cart.general.checkout_proceed' | t -}}
+
+				<div class="icon-container--arrow">
+					{% include 'icon-white-arrow' %}
+				</div>
+			</button>
+		</div>
+	</form>
+{%- else -%}
+	<div class="cart__empty">
+		{%- include 'cart-empty' -%}
+	</div>
+{%- endif -%}

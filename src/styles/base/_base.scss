@@ -1,0 +1,120 @@
+@import url('_variables.scss');
+@import url('_grid.scss');
+@import url('_utd-reset.scss');
+@import url('_fonts.scss');
+@import url('_typography.scss');
+
+* {
+	box-sizing: border-box;
+	outline: none;
+}
+
+html,
+body {
+	background-color: #fff;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	height: 100%;
+}
+
+.content {
+	flex: 1 0 auto;
+}
+
+.visually-hidden {
+	position: absolute;
+	clip: rect(0 0 0 0);
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+}
+
+picture {
+	img {
+		filter: blur(0);
+		transition-property: filter;
+		transition-duration: 0.3s;
+	}
+}
+
+.lazy {
+	img {
+		// width: 100%; // may be need remove/rework this solution
+		filter: blur(10px);
+	}
+}
+
+.section-container {
+	max-width: 1420px;
+	width: 100%;
+	margin: 0 auto;
+	padding: 0 10px;
+}
+
+.link {
+	margin-left: 2px;
+	padding-top: 2px;
+	text-decoration: none;
+	line-height: 1;
+	transition: 0.8s all;
+
+	&.link--account {
+		text-decoration: underline;
+	}
+
+	@include hovers() {
+		&:hover {
+			opacity: 0.5;
+			text-decoration: underline;
+		}
+	}
+
+	&:focus {
+		opacity: 1;
+	}
+}
+
+.errors {
+	margin: 5px 0;
+	color: red;
+	line-height: 1.5;
+}
+
+.form-success {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.form-item {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	margin-bottom: 10px;
+	align-items: center;
+
+	&.form-item--center {
+		justify-content: center;
+		align-items: baseline;
+	}
+
+	.form-item__links {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: flex-end;
+		height: 100%;
+
+		.form-item__links--center {
+			display: flex;
+			align-items: center;
+		}
+	}
+}
+
+.hide {
+	display: none;
+}

@@ -1,0 +1,198 @@
+.button {
+	position: relative;
+	height: auto;
+	padding: 15px 14px;
+	font-family: $ProximaNovaSemibold;
+	font-size: 16px;
+	line-height: 1;
+	letter-spacing: 0.5px;
+	color: $white;
+
+	&:hover,
+	&:focus {
+		background: $venetianRed;
+		opacity: 1;
+	}
+
+	&.disabled,
+	&[disabled] {
+		background-color: $suvaGrey;
+		cursor: default;
+
+		&:hover,
+		&:focus {
+			outline: none;
+			background-color: $suvaGrey;
+
+			.icon-container {
+				transform: translateX(0px);
+			}
+		}
+	}
+
+	.icon-container--arrow {
+		position: absolute;
+		display: inline-block;
+		right: 15px;
+		top: 50%;
+		width: 20px;
+		height: 14px;
+		margin: 0;
+		transition-property: transform;
+		transition-duration: 0.5s;
+		transform: translate(0, -50%);
+	}
+
+	@include hovers() {
+		&:hover {
+			.icon-container--arrow {
+				transform: translate(3px, -50%);
+			}
+		}
+	}
+
+	&.entry-button {
+		position: relative;
+		justify-content: start;
+		width: 35%;
+		padding: 18px 15px;
+		font-size: 13px;
+		letter-spacing: unset;
+
+		&.disabled,
+		&[disabled] {
+			background-color: $venetianRed;
+			cursor: default;
+		}
+
+		&.cancel {
+			background-color: $suvaGrey;
+			transition: 0.3s;
+
+			@include hovers() {
+				&:hover {
+					opacity: 0.9;
+				}
+			}
+		}
+	}
+}
+
+.button-read-more {
+	margin-top: 7px;
+	padding-bottom: 6px;
+	border-bottom: 1px solid black;
+	transition: 0.3s all;
+	font-weight: 600;
+	color: $black;
+
+	.icon-container {
+		margin-left: 13px;
+	}
+
+	&:hover,
+	&:focus {
+		opacity: 0.5;
+
+		.icon-container {
+			transform: translateX(3px);
+		}
+	}
+
+	&.disabled,
+	&[disabled] {
+		border-bottom-color: $suvaGrey;
+		color: $suvaGrey;
+		cursor: default;
+
+		&:hover,
+		&:focus {
+			outline: none;
+			border-bottom-color: $suvaGrey;
+			color: $suvaGrey;
+			opacity: 1;
+
+			.icon-container {
+				transform: translateX(0px);
+			}
+		}
+	}
+}
+
+.button-cta {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 15px;
+	background: $fireEngineRed;
+	transition-property: background;
+	transition-duration: 0.5s;
+	transition-timing-function: ease-out;
+	word-spacing: -4px;
+	letter-spacing: 2px;
+
+	&:hover,
+	&:focus {
+		background: $venetianRed;
+
+		.icon-container {
+			transform: translateX(3px);
+		}
+	}
+}
+
+.icon-container {
+	display: inline-block;
+	margin-left: 46px;
+	width: 20px;
+	height: 18px;
+	transition-property: transform;
+	transition-duration: 0.5s;
+	line-height: 1.6;
+
+	&.icon-container--color path[fill] {
+		fill: $lightBlack;
+	}
+}
+
+@include breakpoint(small) {
+	.button {
+		font-size: 17px;
+
+		&:hover {
+			.icon-container {
+				transform: translateX(0);
+			}
+		}
+	}
+
+	.button-read-more {
+		&:hover {
+			opacity: 1;
+
+			.icon-container {
+				transform: translateX(0);
+			}
+		}
+	}
+
+	.button-cta {
+		word-spacing: -1px;
+		letter-spacing: 0.75px;
+
+		&:hover {
+			background: $fireEngineRed;
+		}
+	}
+
+	.icon-container {
+		margin-left: 19px;
+		line-height: 1.3;
+	}
+}
+
+@include breakpoint(extra-small) {
+	.icon-container {
+		margin-left: 46px;
+	}
+}

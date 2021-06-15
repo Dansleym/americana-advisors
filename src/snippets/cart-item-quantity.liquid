@@ -1,0 +1,27 @@
+<div class="cart-item-quantity">
+	<input class="cart-item-quantity__adjust js-quantity-adjust"
+		   type="button"
+		   data-value="-1"
+		   data-product-quantity="{{- quantity -}}"
+		   data-cart-variant-index="{{- forloop.index -}}"
+		   value="-"
+	/>
+
+	<input class="cart-item-quantity__control js-only-numbers js-update-quantity"
+		   id="updates_{{- item.key -}}"
+		   type="number"
+		   min="1"
+		   data-max-val="99"
+		   data-cart-variant-index="{{- forloop.index -}}"
+		   value="{{- quantity -}}"
+	/>
+
+	<input class="cart-item-quantity__adjust js-quantity-adjust"
+		   type="button"
+		   data-value="1"
+		   data-product-quantity="{{- quantity -}}"
+		   data-inventory-quantity="{{- item.variant.inventory_quantity -}}"
+		   data-cart-variant-index="{{- forloop.index -}}"
+		   value="+"
+	/>
+</div>
